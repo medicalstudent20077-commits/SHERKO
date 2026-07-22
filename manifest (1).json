@@ -1,0 +1,11 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "SHERKO",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "SHERKO",
+  "start_url": "/",
+  "theme_color": "#ffffff"
+}
