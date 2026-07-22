@@ -532,7 +532,9 @@ class _AdvancedLectureReaderScreenState extends State<AdvancedLectureReaderScree
         backgroundColor: const Color(0xFF131B2E),
         title: const Text('🧠 إنشاء أسئلة MCQ بالذكاء
 
-        content: const Text('هل تريد تحليل نص هذه المحاضرة وتوليد 20 سؤال MCQ باللغة المختارة مع الإجابات النموذجية؟'),
+                       content: const Text('Do you want to generate 20 MCQs?'),
+                     
+             
         actions: [
           TextButton(
             onPressed: () {
