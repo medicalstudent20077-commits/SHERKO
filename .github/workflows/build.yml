@@ -7,33 +7,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Java
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
-        distribution: 'zulu'
+        distribution: 'temurin'
         java-version: '17'
-        
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
+
+    - name: Build with Gradle
+      run: |
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v3
       with:
-        flutter-version: '3.x'
-        channel: 'stable'
-        
-    - name: Install Dependencies
-      run: flutter pub get
-      run: flutter create . --platforms=android
-    - name: Build APK
-      run: flutter build apk --release
-      
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-release
-        path: build/app/outputs/flutter-apk/app-release.apk
-        
+        name: app-debug
+        path: app/build/outputs/apk/debug/app-debug.apk
