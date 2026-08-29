@@ -1,554 +1,305 @@
-
- import 'package:flutter/material.dart';
-
-// 1. نظام حماية المفاتيح المشفرة والأدمن
-class AppConfig {
-  static const String aiApiKey = String.fromEnvironment('AI_API_KEY', defaultValue: 'PROTECTED_KEY');
-  static const String adminPasscode = 'ADMIN2026';
+63420Colors.white<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHERKO SUPER AI - النسخة الأكاديمية الفائقة</title>
+<!-- Tailwind CSS لتصميم فخم وسريع -->
+<script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+<!-- FontAwesome للأيقونات -->
+<link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+<!-- Google Fonts (Cairo) -->
+<link href="[https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap](https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap)" rel="stylesheet">
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+darkBg: '#090D16',
+cardBg: '#131B2E',
+cardHover: '#1E2A3E',
+neonCyan: '#00E5FF',
+neonGreen: '#00FF88',
+},
+fontFamily: {
+cairo: ['Cairo', 'sans-serif'],
 }
-
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const SherkoSuperApp());
 }
-
-class SherkoSuperApp extends StatelessWidget {
-  const SherkoSuperApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SHERKO SUPER AI',
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.dark,
-      darkTheme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color(0xFF090D16),
-        primaryColor: const Color(0xFF00E5FF),
-        cardColor: const Color(0xFF131B2E),
-        colorScheme: const ColorScheme.dark(
-          primary: Color(0xFF00E5FF),
-          secondary: Color(0xFF00FF88),
-          surface: Color(0xFF131B2E),
-        ),
-      ),
-      home: const SubscriptionCheckScreen(),
-    );
-  }
 }
-
-// 2. شاشة الاشتراك والتحقق + وضع الأدمن الخفي
-class SubscriptionCheckScreen extends StatefulWidget {
-  const SubscriptionCheckScreen({super.key});
-
-  @override
-  State<SubscriptionCheckScreen> createState() => _SubscriptionCheckScreenState();
 }
-
-class _SubscriptionCheckScreenState extends State<SubscriptionCheckScreen> {
-  bool isSubscribed = false;
-  int _adminClickCount = 0;
-  final TextEditingController _adminController = TextEditingController();
-
-  void _checkAdminCode(String code) {
-    if (code == AppConfig.adminPasscode) {
-      setState(() => isSubscribed = true);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('🔓 تم تفعيل وضع الأدمن المالك (Admin Access) بنجاح!'),
-          backgroundColor: Colors.green,
-        ),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (!isSubscribed) {
-      return Scaffold(
-        body: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF090D16), Color(0xFF131B2E)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  _adminClickCount++;
-                  if (_adminClickCount >= 3) {
-                    _showAdminDialog();
-                    _adminClickCount = 0;
-                  }
-                },
-                child: const Icon(Icons.stars_rounded, size: 100, color: Color(0xFF00E5FF)),
-              ),
-              const SizedBox(height: 20),
-              const Text('اشترك في SHERKO VIP', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
-              const SizedBox(height: 10),
-              const Text(
-                'احصل على المساعد الذكي، توليد الأسئلة MCQ، محرر المحاضرات الفائق، والروبوت العائم لمدة 6 أشهر',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey, fontSize: 14),
-              ),
-              const SizedBox(height: 30),
-              Card(
-                color: const Color(0xFF1E2A3E),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                child: const Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Text('خطة 6 أشهر المتكاملة', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
-                      Text('\$10.00 / 6 أشهر', style: TextStyle(fontSize: 26, color: Color(0xFF00FF88), fontWeight: FontWeight.bold)),
-                      SizedBox(height: 5),
-                      Text('تجديد تلقائي - إلغاء في أي وقت', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00E5FF),
-                  foregroundColor: Colors.black,
-                  minimumSize: const Size(double.infinity, 55),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                ),
-                onPressed: () => setState(() => isSubscribed = true),
-                child: const Text('اشترك الآن 🚀', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-    return const LanguageAndDialectScreen();
-  }
-
-  void _showAdminDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF131B2E),
-        title: const Text('دخول المالك / Admin Access'),
-        content: TextField(
-          controller: _adminController,
-          obscureText: true,
-          decoration: const InputDecoration(
-            hintText: 'أدخل كود الأدمن السري',
-            enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color(0xFF00E5FF))),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              _checkAdminCode(_adminController.text);
-              Navigator.pop(context);
-            },
-            child: const Text('تفعيل', style: TextStyle(color: Color(0xFF00FF88))),
-          ),
-        ],
-      ),
-    );
-  }
+</script>
+<style>
+body { font-family: 'Cairo', sans-serif; background-color: #090D16; color: #ffffff; }
+.glow-cyan { box-shadow: 0 0 20px rgba(0, 229, 255, 0.3); }
+.glow-green { box-shadow: 0 0 20px rgba(0, 255, 136, 0.3); }
+/* تخصيص شريط التمرير */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #090D16; }
+::-webkit-scrollbar-thumb { background: #1E2A3E; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #00E5FF; }
+</style>
+</head>
+<body class="min-h-screen flex flex-col bg-darkBg text-white selection:bg-neonCyan selection:text-black">
+<!-- شاشة التحقق / الاشتراك / الأدمن -->
+<div id="authScreen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-darkBg/95 backdrop-blur-md">
+<div class="max-w-md w-full bg-cardBg border border-neonCyan/20 rounded-3xl p-8 shadow-2xl glow-cyan relative">
+<!-- أيقونة النجوم (الضغط 3 مرات لتفعيل الأدمن) -->
+<div class="text-center cursor-pointer select-none mb-6" id="adminTriggerBtn" title="اضغط 3 مرات لوضع الأدمن">
+<div class="inline-flex p-4 rounded-2xl bg-neonCyan/10 text-neonCyan glow-cyan mb-3 transition transform hover:scale-110">
+<i class="fa-solid fa-stars text-5xl"></i>
+</div>
+<h1 class="text-2xl font-black tracking-wide">SHERKO SUPER AI</h1>
+<p class="text-xs text-gray-400 mt-1">المساعد الأكاديمي الأذكى لطلبة طب الأسنان</p>
+</div>
+<!-- محتوى شاشة الباقة -->
+<div id="paywallContent">
+<div class="bg-cardHover rounded-2xl p-5 border border-white/5 mb-6 text-center">
+<span class="text-xs px-3 py-1 bg-neonGreen/10 text-neonGreen rounded-full font-bold">عروض الحزمة الفائقة 🚀</span>
+<h2 class="text-xl font-bold mt-3">خطة 6 أشهر المتكاملة</h2>
+<div class="text-3xl font-black text-neonGreen my-2">$10.00 <span class="text-xs text-gray-400 font-normal">/ 6 أشهر</span></div>
+<p class="text-xs text-gray-400">توليد أسئلة MCQ، محرر محاضرات فائق، تدوين صوتي، وروبوت ذكي باللهجة العراقية.</p>
+</div>
+<button onclick="activateApp()" class="w-full py-4 bg-neonCyan text-black font-bold rounded-2xl shadow-lg hover:bg-neonCyan/90 transition transform active:scale-95 flex items-center justify-center gap-2">
+<span>اشترك الآن وادخل للنظام</span>
+<i class="fa-solid fa-rocket"></i>
+</button>
+</div>
+<!-- نافذة دخول الأدمن المخفية (تظهر بعد 3 ضغطات) -->
+<div id="adminPanel" class="hidden mt-4 pt-4 border-t border-white/10 animate-fade-in">
+<p class="text-xs text-neonCyan mb-2 font-bold"><i class="fa-solid fa-lock-open"></i> وضع المالك / Admin Access</p>
+<div class="flex gap-2">
+<input type="password" id="adminPassInput" placeholder="أدخل كود الأدمن (ADMIN2026)" class="flex-1 bg-darkBg border border-white/20 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-neonCyan">
+<button onclick="verifyAdmin()" class="bg-neonGreen text-black font-bold px-4 py-2 rounded-xl text-sm">تفعيل</button>
+</div>
+</div>
+</div>
+</div>
+<!-- شاشة اختيار اللهجة (تظهر بعد الدخول) -->
+<div id="dialectScreen" class="fixed inset-0 z-40 hidden flex items-center justify-center p-4 bg-darkBg/95">
+<div class="max-w-md w-full bg-cardBg border border-neonGreen/20 rounded-3xl p-8 shadow-2xl glow-green">
+<h2 class="text-xl font-bold mb-2 flex items-center gap-2">
+<i class="fa-solid fa-language text-neonGreen"></i> تخصيص لهجة المساعد
+</h2>
+<p class="text-xs text-gray-400 mb-6">اختر الطريقة التي يفضل "شيركو AI" مخاطبتك بها:</p>
+<div class="space-y-3 mb-6" id="dialectsList">
+<label class="flex items-center justify-between p-4 rounded-2xl bg-cardHover border border-neonCyan cursor-pointer transition">
+<span class="font-bold">العراقية 🇮🇶 (الأساسية)</span>
+<input type="radio" name="dialect" value="العراقية" checked class="accent-neonCyan">
+</label>
+<label class="flex items-center justify-between p-4 rounded-2xl bg-cardHover border border-white/5 cursor-pointer transition">
+<span class="font-bold">الفصحى 🌐</span>
+<input type="radio" name="dialect" value="الفصحى" class="accent-neonCyan">
+</label>
+<label class="flex items-center justify-between p-4 rounded-2xl bg-cardHover border border-white/5 cursor-pointer transition">
+<span class="font-bold">English 🇺🇸</span>
+<input type="radio" name="dialect" value="English" class="accent-neonCyan">
+</label>
+</div>
+<button onclick="goToDashboard()" class="w-full py-4 bg-neonGreen text-black font-bold rounded-2xl shadow-lg hover:bg-neonGreen/90 transition">
+دخول للنظام الأكاديمي ➔
+</button>
+</div>
+</div>
+<!-- لوحة التحكم الرئيسية (Workspace) -->
+<div id="mainDashboard" class="hidden flex-1 flex h-screen overflow-hidden">
+<!-- الشريط الجانبي الفخم -->
+<aside class="w-72 bg-cardBg border-r border-white/5 flex flex-col hidden md:flex">
+<div class="p-6 flex items-center gap-3 border-b border-white/5">
+<div class="w-10 h-10 rounded-xl bg-neonCyan flex items-center justify-center text-black font-black text-lg">D</div>
+<div>
+<h3 class="font-bold text-sm">Dr. Student</h3>
+<p class="text-[10px] text-neonGreen font-semibold">SHERKO VIP Active 🌟</p>
+</div>
+</div>
+<nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-neonCyan/10 text-neonCyan font-bold text-sm">
+<i class="fa-solid fa-book-open"></i>
+<span>الملاحظات والمحاضرات</span>
+</a>
+<a href="#" onclick="showFolderView()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cardHover text-gray-300 text-sm transition">
+<i class="fa-solid fa-folder-tree text-amber-400"></i>
+<span>المجلدات والصفوف</span>
+</a>
+<a href="#" onclick="openAiQuizModal()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cardHover text-gray-300 text-sm transition">
+<i class="fa-solid fa-brain text-neonGreen"></i>
+<span>مولد الاختبارات الذكي</span>
+</a>
+</nav>
+<div class="p-4 border-t border-white/5">
+<button onclick="resetAppSession()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-500/10 text-red-400 text-sm transition">
+<i class="fa-solid fa-arrow-right-from-bracket"></i>
+<span>تسجيل الخروج / إعادة الضبط</span>
+</button>
+</div>
+</aside>
+<!-- المحتوى الرئيسي (استوديو المحاضرات والمجلدات) -->
+<main class="flex-1 flex flex-col h-full overflow-hidden">
+<!-- شريط علوي -->
+<header class="h-16 bg-cardBg border-b border-white/5 px-6 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-gray-400 hover:text-white"><i class="fa-solid fa-bars text-xl"></i></button>
+<h2 class="font-bold text-lg flex items-center gap-2">
+<span>استوديو الملاحظات الأكاديمي</span>
+<span class="text-xs px-2 py-0.5 bg-neonCyan/10 text-neonCyan rounded-md">V2.6 Pro</span>
+</h2>
+</div>
+<div class="flex items-center gap-3">
+<button onclick="openLectureReader()" class="px-4 py-2 bg-neonCyan text-black font-bold rounded-xl text-sm flex items-center gap-2 shadow-lg hover:bg-neonCyan/90 transition">
+<i class="fa-solid fa-file-medical"></i>
+<span>محاضرة اليوم (Parasitology)</span>
+</button>
+</div>
+</header>
+<!-- مساحة العرض (مجلدات ومحاضرات) -->
+<div id="contentArea" class="flex-1 p-6 md:p-8 overflow-y-auto">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-bold">مجلدات المرحلة الأولى</h3>
+<button onclick="alert('تم تفعيل خاصية إنشاء مجلد جديد بذكاء شيركو!')" class="text-xs text-neonCyan bg-neonCyan/10 px-3 py-1.5 rounded-lg hover:bg-neonCyan/25 transition">
+<i class="fa-solid fa-plus"></i> مجلد جديد
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+<!-- كارد مجلد -->
+<div onclick="openLectureReader()" class="bg-cardBg border border-white/5 hover:border-neonCyan/50 rounded-2xl p-5 cursor-pointer transition transform hover:-translate-y-1 shadow-lg group">
+<div class="flex items-center justify-between mb-4">
+<i class="fa-solid fa-folder text-4xl text-amber-400 group-hover:scale-110 transition"></i>
+<span class="text-xs text-gray-400 bg-cardHover px-2 py-1 rounded">106 ملف</span>
+</div>
+<h4 class="font-bold text-base mb-1">المرحلة الأولى - داء الليشمانيات</h4>
+<p class="text-xs text-gray-400">آخر تحديث: اليوم، 08:00 م</p>
+</div>
+<!-- كارد ملف PDF -->
+<div onclick="openLectureReader()" class="bg-cardBg border border-white/5 hover:border-neonCyan/50 rounded-2xl p-5 cursor-pointer transition transform hover:-translate-y-1 shadow-lg group">
+<div class="flex items-center justify-between mb-4">
+<i class="fa-solid fa-file-pdf text-4xl text-neonCyan group-hover:scale-110 transition"></i>
+<span class="text-xs text-neonGreen bg-neonGreen/10 px-2 py-1 rounded font-bold">جاهز للدراسة</span>
+</div>
+<h4 class="font-bold text-base mb-1">Parasitology Lecture 1</h4>
+<p class="text-xs text-gray-400">شامل الترجمة والذكاء الاصطناعي</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- شاشة قارئ ومحرر المحاضرات (Advanced Reader - بديل Jnotes المطور) -->
+<div id="readerScreen" class="fixed inset-0 z-50 hidden flex flex-col bg-darkBg">
+<header class="h-16 bg-cardBg border-b border-white/5 px-6 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button onclick="closeLectureReader()" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-arrow-right text-lg"></i></button>
+<div>
+<h3 class="font-bold text-sm">Parasitology - Leishmaniasis (Lecture 1)</h3>
+<p class="text-[10px] text-neonCyan">أدوات التحرير العائمة نشطة</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button onclick="triggerVisualAi()" class="px-3 py-1.5 bg-neonCyan/10 text-neonCyan hover:bg-neonCyan/20 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
+<i class="fa-solid fa-image"></i> توليد رسوم AI
+</button>
+<button onclick="openAiQuizModal()" class="px-3 py-1.5 bg-neonGreen/10 text-neonGreen hover:bg-neonGreen/20 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
+<i class="fa-solid fa-brain"></i> أسئلة MCQ (20)
+</button>
+</div>
+</header>
+<div class="flex-1 flex relative overflow-hidden">
+<!-- شريط الأدوات العائم المتطور (Glassmorphism Floating Toolbar) -->
+<div class="absolute left-4 top-4 z-10 bg-cardBg/95 backdrop-blur-md border border-neonCyan/30 rounded-2xl p-2 shadow-2xl flex flex-col items-center gap-3">
+<button class="w-10 h-10 rounded-xl bg-neonCyan/20 text-neonCyan flex items-center justify-center hover:bg-neonCyan hover:text-black transition" title="قلم"><i class="fa-solid fa-pen-nib"></i></button>
+<button class="w-10 h-10 rounded-xl text-gray-300 flex items-center justify-center hover:bg-cardHover hover:text-neonCyan transition" title="تحديد (Highlighter)"><i class="fa-solid fa-highlighter"></i></button>
+<button class="w-10 h-10 rounded-xl text-gray-300 flex items-center justify-center hover:bg-cardHover hover:text-neonCyan transition" title="تحديد أداة Lasso"><i class="fa-solid fa-lasso"></i></button>
+<button class="w-10 h-10 rounded-xl text-gray-300 flex items-center justify-center hover:bg-cardHover hover:text-red-400 transition" title="ممحاة"><i class="fa-solid fa-eraser"></i></button>
+<button class="w-10 h-10 rounded-xl text-gray-300 flex items-center justify-center hover:bg-cardHover hover:text-neonCyan transition" title="ملاحظة صوتية"><i class="fa-solid fa-microphone"></i></button>
+<hr class="w-6 border-white/10 my-1">
+<!-- لوحة الألوان -->
+<div class="w-5 h-5 rounded-full bg-neonCyan cursor-pointer border-2 border-white"></div>
+<div class="w-5 h-5 rounded-full bg-neonGreen cursor-pointer"></div>
+<div class="w-5 h-5 rounded-full bg-amber-400 cursor-pointer"></div>
+<div class="w-5 h-5 rounded-full bg-pink-500 cursor-pointer"></div>
+</div>
+<!-- عرض المحاضرة (نص إنجليزي وترجمته الفورية) -->
+<div class="flex-1 p-6 md:p-12 overflow-y-auto flex justify-center">
+<div class="max-w-3xl w-full bg-white text-gray-900 rounded-3xl p-8 md:p-12 shadow-2xl space-y-8">
+<div class="border-b pb-6">
+<span class="text-xs bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded-full">محاضرة معتمدة 🩺</span>
+<h1 class="text-2xl md:text-3xl font-black mt-3 text-slate-900">Leishmaniasis in humans is caused by more than 20 species of Leishmania.</h1>
+<p class="text-lg font-semibold text-purple-700 mt-2">داء الليشمانيات في البشر سببه أكثر من 20 نوعاً من الليشمانيا.</p>
+</div>
+<div>
+<h2 class="text-2xl md:text-3xl font-black text-slate-900">Risk factors include poverty, malnutrition, deforestation and urbanization.</h2>
+<p class="text-lg font-semibold text-purple-700 mt-2">وتشمل عوامل الخطر الفقر وسوء التغذية وإزالة الغابات والتحضر.</p>
+</div>
+<!-- مساحة تفاعلية للرسم أو الملاحظات -->
+<div class="p-6 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-300 text-center">
+<i class="fa-solid fa-hand-pointer text-slate-400 text-2xl mb-2"></i>
+<p class="text-sm text-slate-600 font-bold">اضغط هنا لإضافة تعليق صوتي أو رسم توضيحي فوق المحاضرة</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- نافذة منبثقة لاختبارات الذكاء الاصطناعي (AI Quiz Modal) -->
+<div id="aiQuizModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-darkBg/9ental backdrop-blur-md">
+<div class="max-w-md w-full bg-cardBg border border-neonGreen/30 rounded-3xl p-6 shadow-2xl glow-green">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-brain text-neonGreen"></i> مولد الأسئلة الذكي</h3>
+<button onclick="closeAiQuizModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+</div>
+<p class="text-xs text-gray-300 mb-6">يقوم الذكاء الاصطناعي الآن بتحليل تفاصيل محاضرة داء الليشمانيات لتوليد 20 سؤال MCQ واختبار معلوماتك الطبية بدقة.</p>
+<button onclick="startQuizSimulation()" class="w-full py-3.5 bg-neonGreen text-black font-bold rounded-xl shadow-lg hover:bg-neonGreen/90 transition">
+توليد وبدء الاختبار الآن ⚡
+</button>
+</div>
+</div>
+<!-- سكربت التفاعل وتحويل التطبيق -->
+<script>
+// تفعيل أزرار الأدمن عند النقر 3 مرات
+let clickCount = 0;
+document.getElementById('adminTriggerBtn').addEventListener('click', () => {
+clickCount++;
+if (clickCount >= 3) {
+document.getElementById('adminPanel').classList.remove('hidden');
+clickCount = 0;
 }
-
-// 3. شاشة اختيار اللهجات واللغة (بينها اللهجة العراقية 🇮🇶)
-class LanguageAndDialectScreen extends StatefulWidget {
-  const LanguageAndDialectScreen({super.key});
-
-  @override
-  State<LanguageAndDialectScreen> createState() => _LanguageAndDialectScreenState();
+});
+function verifyAdmin() {
+const pass = document.getElementById('adminPassInput').value;
+if (pass === 'ADMIN2026') {
+alert('🔓 تم تفعيل وضع الأدمن المالك (Admin Access) بنجاح!');
+activateApp();
+} else {
+alert('❌ الكود غير صحيح!');
 }
-
-class _LanguageAndDialectScreenState extends State<LanguageAndDialectScreen> {
-  String selectedDialect = 'العراقية 🇮🇶';
-
-  final List<String> dialects = [
-    'العراقية 🇮🇶',
-    'الفصحى 🌐',
-    'المصرية 🇪🇬',
-    'الخليجية 🇸🇦',
-    'English 🇺🇸',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('تخصيص لغة SHERKO AI')),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('اختر اللهجة التي يكلمك بها المساعد والروبوت:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                itemCount: dialects.length,
-                itemBuilder: (context, index) {
-                  final dialect = dialects[index];
-                  return RadioListTile<String>(
-                    title: Text(dialect, style: const TextStyle(fontSize: 16)),
-                    value: dialect,
-                    groupValue: selectedDialect,
-                    activeColor: const Color(0xFF00E5FF),
-                    onChanged: (value) => setState(() => selectedDialect = value!),
-                  );
-                },
-              ),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF00FF88),
-                foregroundColor: Colors.black,
-                minimumSize: const Size(double.infinity, 50),
-              ),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MainNotesDashboard()),
-                );
-              },
-              child: const Text('دخول للنظام الأكاديمي ➔', style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
-
-// 4. لوحة الملاحظات وإدارة المجلدات الحصرية (Sherko Studio Workspace)
-class MainNotesDashboard extends StatefulWidget {
-  const MainNotesDashboard({super.key});
-
-  @override
-  State<MainNotesDashboard> createState() => _MainNotesDashboardState();
+function activateApp() {
+document.getElementById('authScreen').classList.add('hidden');
+document.getElementById('dialectScreen').classList.remove('hidden');
 }
-
-class _MainNotesDashboardState extends State<MainNotesDashboard> {
-  int _selectedNavIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          // الشريط الجانبي الأنيق
-          Container(
-            width: 260,
-            color: const Color(0xFF131B2E),
-            child: Column(
-              children: [
-                const SizedBox(height: 50),
-                const ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Color(0xFF00E5FF),
-                    child: Icon(Icons.person, color: Colors.black),
-                  ),
-                  title: Text('Dr. Student', style: TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text('SHERKO VIP Active', style: TextStyle(color: Color(0xFF00FF88), fontSize: 11)),
-                ),
-                const Divider(color: Colors.white24, height: 30),
-                ListTile(
-                  leading: const Icon(Icons.description, color: Color(0xFF00E5FF)),
-                  title: const Text('الملاحظات والمحاضرات'),
-                  selected: _selectedNavIndex == 0,
-                  onTap: () => setState(() => _selectedNavIndex = 0),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.folder_special, color: Colors.amberAccent),
-                  title: const Text('المجلدات والصفوف'),
-                  selected: _selectedNavIndex == 1,
-                  onTap: () => setState(() => _selectedNavIndex = 1),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.auto_awesome, color: Color(0xFF00FF88)),
-                  title: const Text('مولد الاختبارات الذكي'),
-                  onTap: () {},
-                ),
-                const Spacer(),
-                ListTile(
-                  leading: const Icon(Icons.delete_sweep, color: Colors.redAccent),
-                  title: const Text('سلة المهملات'),
-                  onTap: () {},
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
-
-          // منطقة عرض الملفات والمجلدات
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(28.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('استوديو الملاحظات الأكاديمي', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF00E5FF),
-                          foregroundColor: Colors.black,
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const AdvancedLectureReaderScreen()),
-                          );
-                        },
-                        icon: const Icon(Icons.note_add_rounded),
-                        label: const Text('فتح محاضرة جديدة (PDF/Note)', style: TextStyle(fontWeight: FontWeight.bold)),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                  Expanded(
-                    child: GridView.count(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                      children: [
-                        _buildCard('المرحلة الأولى - داء الليشمانيات', '106 ملاحظة ومحاضرة', Icons.folder, Colors.amberAccent, true),
-                        _buildCard('Parasitology Lecture 1', 'تم التعديل اليوم', Icons.picture_as_pdf, const Color(0xFF00E5FF), false),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCard(String title, String subtitle, IconData icon, Color color, bool isFolder) {
-    return Card(
-      color: const Color(0xFF131B2E),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AdvancedLectureReaderScreen()),
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 60, color: color),
-              const SizedBox(height: 15),
-              Text(title, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              const SizedBox(height: 5),
-              Text(subtitle, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+function goToDashboard() {
+document.getElementById('dialectScreen').classList.add('hidden');
+document.getElementById('mainDashboard').classList.remove('hidden');
+document.getElementById('mainDashboard').classList.add('flex');
 }
-
-// 5. قارئ ومحرر المحاضرات الفائق (تفوق على Jnotes بشرائط الأدوات العائمة الاحترافية)
-class AdvancedLectureReaderScreen extends StatefulWidget {
-  const AdvancedLectureReaderScreen({super.key});
-
-  @override
-  State<AdvancedLectureReaderScreen> createState() => _AdvancedLectureReaderScreenState();
+function openLectureReader() {
+document.getElementById('readerScreen').classList.remove('hidden');
 }
-
-class _AdvancedLectureReaderScreenState extends State<AdvancedLectureReaderScreen> {
-  Color _selectedColor = const Color(0xFF00FF88);
-  String _selectedTool = 'Pen';
-
-  final List<Color> _palette = [
-    const Color(0xFF00E5FF),
-    const Color(0xFF00FF88),
-    Colors.amberAccent,
-    Colors.pinkAccent,
-    Colors.purpleAccent,
-    Colors.white,
-    Colors.redAccent,
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF131B2E),
-        title: const Text('Parasitology - Leishmaniasis (Lecture 1)'),
-        centerTitle: false,
-        actions: [
-          // ذكاء اصطناعي 1: توليد 3-4 صور واستخراجها
-          IconButton(
-            icon: const Icon(Icons.add_photo_alternate_rounded, color: Color(0xFF00E5FF)),
-            tooltip: 'استخراج/توليد صور توضيحية بالذكاء الاصطناعي',
-            onPressed: () => _generateImagesDialog(),
-          ),
-          // ذكاء اصطناعي 2: توليد 20 سؤال MCQ
-          IconButton(
-            icon: const Icon(Icons.quiz_rounded, color: Color(0xFF00FF88)),
-            tooltip: 'توليد 20 سؤال MCQ من المحاضرة',
-            onPressed: () => _generateMCQsDialog(),
-          ),
-          const SizedBox(width: 10),
-        ],
-      ),
-      body: Stack(
-        children: [
-          // مساحة عرض المحاضرة والتعديل عليها
-          Positioned.fill(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(40),
-              child: Container(
-                padding: const EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: const [BoxShadow(color: Colors.black54, blurRadius: 10)],
-                ),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Leishmaniasis in humans is caused by more than 20 species of Leishmania.',
-                      style: TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'داء الليشمانيات في البشر سببه أكثر من 20 نوعاً من الليشمانيا.',
-                      style: TextStyle(fontSize: 17, color: Colors.deepPurple, fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(height: 30),
-                    Text(
-                      'Risk factors include poverty, malnutrition, deforestation and urbanization.',
-                      style: TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'وتشمل عوامل الخطر الفقر وسوء التغذية وإزالة الغابات والتحضر.',
-                      style: TextStyle(fontSize: 17, color: Colors.deepPurple, fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // شريط أدوات تحرير عائم ومستقل (Custom Glassmorphism Toolbar - متطور كلياً عن Jnotes)
-          Positioned(
-            left: 20,
-            top: 20,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-              decoration: BoxDecoration(
-                color: const Color(0xFF131B2E).withOpacity(0.95),
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: const Color(0xFF00E5FF).withOpacity(0.4)),
-                boxShadow: const [BoxShadow(color: Colors.black80, blurRadius: 15)],
-              ),
-              child: Column(
-                children: [
-                  _buildToolButton(Icons.edit_rounded, 'Pen'),
-                  _buildToolButton(Icons.border_color_rounded, 'Highlighter'),
-                  _buildToolButton(Icons.select_all_rounded, 'Lasso'),
-                  _buildToolButton(Icons.cleaning_services_rounded, 'Eraser'),
-                  _buildToolButton(Icons.text_fields_rounded, 'Text'),
-                  _buildToolButton(Icons.mic_rounded, 'AudioNote'),
-                  const Divider(color: Colors.white24, height: 20),
-                  // لوحة اختيار الألوان الشاملة
-                  ..._palette.map((color) => _buildColorDot(color)).toList(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildToolButton(IconData icon, String toolName) {
-    bool isSelected = _selectedTool == toolName;
-    return IconButton(
-      icon: Icon(icon, color: isSelected ? const Color(0xFF00E5FF) : Colors.white70),
-      onPressed: () => setState(() => _selectedTool = toolName),
-    );
-  }
-
-  Widget _buildColorDot(Color color) {
-    bool isSelected = _selectedColor == color;
-    return GestureDetector(
-      onTap: () => setState(() => _selectedColor = color),
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        width: 22,
-        height: 22,
-        decoration: BoxDecoration(
-          color: color,
-          shape: BoxShape.circle,
-          border: Border.all(color: isSelected ? Colors.white : Colors.transparent, width: 2.5),
-        ),
-      ),
-    );
-  }
-
-  void _generateImagesDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF131B2E),
-        title: const Text('🖼️ توليد واستخراج الصور (Visual AI)'),
-        content: const Text('يقوم الذكاء الاصطناعي باستخراج الرسوم أو توليد 3 إلى 4 صور توضيحية لربطها بالملاحظة.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('تم توليد 4 صور توضيحية للمحاضرة بنجاح!')),
-              );
-            },
-            child: const Text('توليد الصور الآن ⚡', style: TextStyle(color: Color(0xFF00E5FF))),
-          )
-        ],
-      ),
-    );
-  }
-
-  void _generateMCQsDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF131B2E),
-        title: const Text('🧠 إنشاء أسئلة MCQ بالذكاء
-
-                       content: const Text('Do you want to generate 20 MCQs?'),
-                     
-             
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('جاري تحليل المحاضرة وصياغة 20 سؤال MCQ...')),
-              );
-            },
-            child: const Text('توليد 20 سؤال 🚀', style: TextStyle(color: Color(0xFF00FF88))),
-          )
-        ],
-      ),
-    );
-  }
+function closeLectureReader() {
+document.getElementById('readerScreen').classList.add('hidden');
 }
- /
+function openAiQuizModal() {
+document.getElementById('aiQuizModal').classList.remove('hidden');
+}
+function closeAiQuizModal() {
+document.getElementById('aiQuizModal').classList.add('hidden');
+}
+function startQuizSimulation() {
+closeAiQuizModal();
+alert('✨ تم توليد 20 سؤال MCQ بنجاح واستخراج الرسوم التوضيحية للمحاضرة!');
+}
+function triggerVisualAi() {
+alert('🖼️ قام الذكاء الاصطناعي بتوليد واستخراج 4 صور توضيحية لدورة حيات طفيل الليشمانيا بنجاح!');
+}
+function resetAppSession() {
+location.reload();
+}
+</script>
+</body>
+</html>
