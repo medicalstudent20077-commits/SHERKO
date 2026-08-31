@@ -15,7 +15,6 @@
             --border-color: #1e293b;
             --yellow-btn: #facc15;
             --yellow-hover: #eab308;
-            --danger-color: #ef4444;
             --success-color: #22c55e;
         }
         [data-theme="light"] {
@@ -44,20 +43,38 @@
             flex-direction: column;
             justify-content: space-between;
         }
+        /* Cinematic Background for Splash / Welcome Screen */
+        .screen-splash {
+            background: linear-gradient(135deg, #0b0f19 0%, #1e1b4b 50%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .screen-splash::before {
+            content: '';
+            position: absolute;
+            width: 300px; height: 300px;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 50%;
+            top: -50px; right: -50px;
+            filter: blur(60px);
+            z-index: 0;
+        }
         .screen {
             display: none;
             flex: 1;
             padding: 20px;
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             width: 100%;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
         .screen.active {
-            display: flex;
+            display: flex !important;
         }
         header {
             display: flex;
@@ -89,6 +106,9 @@
             margin-bottom: 15px;
             font-size: 1rem;
         }
+        select.form-control {
+            cursor: pointer;
+        }
         .btn-main {
             background: var(--accent-color);
             color: white;
@@ -100,7 +120,8 @@
             font-weight: bold;
             font-size: 1rem;
             margin-top: 10px;
-        }
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
         .btn-main:hover {
             background: var(--accent-hover);
         }
@@ -125,7 +146,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-font-size: 0.8rem;
+            font-size: 0.8rem;
             cursor: pointer;
             gap: 4px;
         }
@@ -148,7 +169,7 @@ font-size: 0.8rem;
             display: block;
         }
         
-        /* Cinematic UI Styles for Notes & Lecture View */
+        /* Cinematic Grid Styles */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -228,7 +249,7 @@ font-size: 0.8rem;
             cursor: pointer;
             font-size: 0.85rem;
             white-space: nowrap;
-            display: flex;
+display: flex;
             align-items: center;
             gap: 5px;
         }
@@ -251,7 +272,7 @@ font-size: 0.8rem;
             top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0,0,0,0.7);
             justify-content: center; align-items: center; z-index: 1000;
-}
+        }
         .modal-content {
             background-color: var(--card-bg);
             padding: 25px;
@@ -265,22 +286,32 @@ font-size: 0.8rem;
 </head>
 <body data-theme="dark">
 
-    <!-- Screen 1: Language Selection -->
-    <div id="screenLang" class="screen active">
-        <h1 style="margin-bottom: 15px;">اختر لغة التطبيق</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 25px;">Select your preferred language</p>
-        <button class="btn-main" onclick="selectLanguage('ar-iq')">العربية (اللهجة العراقية 🇮🇶)</button>
-        <button class="btn-main" onclick="selectLanguage('ar-gulf')">العربية (الخليجية 🇸🇦)</button>
-        <button class="btn-main" onclick="selectLanguage('ar-egy')">العربية (المصرية 🇪🇬)</button>
-        <button class="btn-main" onclick="selectLanguage('en')" style="background: #475569;">English 🇺🇸</button>
+    <!-- Screen 1: Language Selection (Cinematic Splash Background) -->
+    <div id="screenLang" class="screen screen-splash active">
+        <div style="font-size: 3.5rem; margin-bottom: 10px;">⚡</div>
+        <h1 style="margin-bottom: 8px; font-size: 1.6rem; color: #fff;">منصة شيركو الذكية</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 25px; font-size: 0.95rem;">اختر لغة التطبيق المفضلة للمتابعة</p>
+        
+        <div style="width: 100%; max-width: 320px;">
+            <select id="languageSelector" class="form-control" style="text-align: center; font-weight: bold; background: rgba(19, 27, 46, 0.9);">
+                <option value="ar">اللغة العربية (الفصحى)</option>
+                <option value="en">English (الإنجليزية)</option>
+                <option value="fr">Français (الفرنسية)</option>
+                <option value="de">Deutsch (الألمانية)</option>
+            </select>
+            <button class="btn-main" onclick="proceedFromLanguage()">التالي ➔</button>
+        </div>
     </div>
 
     <!-- Screen 2: Account Login -->
-    <div id="screenAccount" class="screen">
-        <h1 style="margin-bottom: 10px;">إضافة حساب</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 20px;">سجل بريدك الإلكتروني للمتابعة والدخول</p>
-        <input type="email" id="userEmail" class="form-control" placeholder="example@gmail.com">
-        <button class="btn-main" onclick="submitAccount()">تسجيل ودخول للتطبيق</button>
+    <div id="screenAccount" class="screen screen-splash">
+        <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
+        <h1 style="margin-bottom: 10px; font-size: 1.5rem;">تسجيل الحساب</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">أدخل بريدك الإلكتروني للمزامنة الشاملة والدخول</p>
+        <div style="width: 100%; max-width: 320px;">
+            <input type="email" id="userEmail" class="form-control" placeholder="example@gmail.com" style="text-align: center;">
+            <button class="btn-main" onclick="submitAccount()">تسجيل ودخول للتطبيق</button>
+        </div>
     </div>
 
     <!-- Screen 3: Main App -->
@@ -298,16 +329,11 @@ font-size: 0.8rem;
                     <button id="backFolderBtn" style="display:none; background:none; border:none; color:var(--text-secondary); cursor:pointer;" onclick="goBackFolder()">⬅ رجوع</button>
                 </div>
 
-                <!-- Cinematic Grid Container -->
-                <div class="grid-container" id="notesGrid">
-                    <!-- Dynamic Items will load here -->
-                </div>
+                <div class="grid-container" id="notesGrid"></div>
 
-                <!-- Floating Yellow Add Button -->
                 <button class="floating-add-btn" onclick="openAddModal()">+</button>
             </div>
-
-            <!-- Tab 2: Sherko Robot -->
+<!-- Tab 2: Sherko Robot -->
             <div id="tabRobot" class="tab-content">
                 <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
                     <h3>🤖 المساعد الآلي شيركو</h3>
@@ -326,7 +352,7 @@ font-size: 0.8rem;
 
         <!-- Bottom Navigation Bar -->
         <nav class="bottom-nav">
-<button class="nav-item active" onclick="switchTab('notes', this)">
+            <button class="nav-item active" onclick="switchTab('notes', this)">
                 <span>📚</span>
                 <span>الملاحظات</span>
             </button>
@@ -341,7 +367,7 @@ font-size: 0.8rem;
         </nav>
     </div>
 
-    <!-- Lecture Viewer Screen (Hidden by default, opens when clicking a file) -->
+    <!-- Lecture Viewer Screen -->
     <div id="lectureViewerScreen" style="display:none; flex:1; flex-direction:column; height:100vh; position:fixed; top:0; left:0; width:100%; background:var(--bg-color); z-index:200;">
         <header>
             <button class="icon-btn" onclick="closeLecture()">⬅ إغلاق المحاضرة</button>
@@ -350,7 +376,6 @@ font-size: 0.8rem;
         </header>
 
         <div style="flex:1; padding:20px; overflow-y:auto;">
-            <!-- Cinematic Lecture Toolbar -->
             <div class="lecture-toolbar">
                 <button class="tool-btn" onclick="applyTool('pen')">🖊️ قلم تحديد</button>
                 <button class="tool-btn" onclick="applyTool('underline')">underline تسطير</button>
@@ -368,13 +393,11 @@ font-size: 0.8rem;
                 <div id="aiResponseOutput" style="margin-top: 10px; background: var(--bg-color); padding: 10px; border-radius: 8px; font-size: 0.9rem; display:none;"></div>
             </div>
 
-            <!-- Image Results Area -->
             <div id="imageResultsArea" style="margin-top:15px; display:none;">
-                <h4 style="font-size:0.95rem; margin-bottom:8px;">🖼️ النتائج المولدة (اسحب الصورة أو أضفها للمحاضرة):</h4>
+<h4 style="font-size:0.95rem; margin-bottom:8px;">🖼️ النتائج المولدة (اسحب الصورة أو أضفها للمحاضرة):</h4>
                 <div id="imageGrid" style="display:flex; gap:10px; overflow-x:auto; padding-bottom:10px;"></div>
             </div>
 
-            <!-- Lecture Main Content Box -->
             <div style="background: var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:20px; margin-top:15px; min-height:300px;">
                 <h3 id="lectureContentTitle" style="margin-bottom: 10px;">محاضرة علمية</h3>
                 <p id="lectureTextBody" style="color: var(--text-secondary); line-height: 1.6;">هنا يتم عرض نص المحاضرة، الملفات المضافة، ويمكنك استخدام أدوات الأقلام، توليد الصور، وتوليد الأسئلة بحرية كاملة...</p>
@@ -383,7 +406,7 @@ font-size: 0.8rem;
     </div>
 
     <!-- Modal: Add New Folder or File -->
-<div id="addModal" class="modal">
+    <div id="addModal" class="modal">
         <div class="modal-content">
             <h3 style="margin-bottom: 15px;">إضافة عنصر جديد</h3>
             <input type="text" id="newItemName" class="form-control" placeholder="اسم الفولدر أو المحاضرة...">
@@ -415,7 +438,6 @@ font-size: 0.8rem;
         const ADMIN_EMAIL = "medical.student2007.7@gmail.com";
         let currentUserEmail = "";
 
-        // File & Folder structure data
         let fileSystem = [
             { id: 1, name: "المرحلة الأولى", type: "folder", parent: null, children: [
                 { id: 11, name: "التشريح العملي", type: "folder", parent: 1, children: [
@@ -425,9 +447,11 @@ font-size: 0.8rem;
                 { id: 12, name: "مادة الحاسوب", type: "file", parent: 1 }
             ]}
         ];
-        let currentFolderId = null; // null means root
+        let currentFolderId = null;
 
-        function selectLanguage(lang) {
+        function proceedFromLanguage() {
+            const selectedLang = document.getElementById('languageSelector').value;
+            localStorage.setItem('sherko_lang', selectedLang);
             document.getElementById('screenLang').classList.remove('active');
             document.getElementById('screenAccount').classList.add('active');
         }
@@ -442,8 +466,7 @@ font-size: 0.8rem;
                 alert('يرجى إدخال البريد الإلكتروني.');
             }
         }
-
-        function enterMainApp() {
+function enterMainApp() {
             document.getElementById('screenMain').style.display = 'flex';
             if(currentUserEmail === ADMIN_EMAIL) {
                 document.getElementById('headerTitle').innerHTML = 'شيركو 🚀 <span style="font-size:0.7rem; background:var(--success-color); padding:2px 6px; border-radius:4px;">المالك</span>';
@@ -453,24 +476,4 @@ font-size: 0.8rem;
         }
 
         function switchTab(tabName, btnElement) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-if(tabName === 'notes') document.getElementById('tabNotes').classList.add('active');
-            else if(tabName === 'robot') document.getElementById('tabRobot').classList.add('active');
-            else if(tabName === 'design') document.getElementById('tabDesign').classList.add('active');
-            
-            btnElement.classList.add('active');
-        }
-
-        // Render File System Grid
-        function renderFileSystem() {
-            const grid = document.getElementById('notesGrid');
-            grid.innerHTML = '';
-
-            let currentItems = [];
-            if (currentFolderId === null) {
-                currentItems = fileSystem;
-                document.getElementById('currentPathTitle').innerText = "📁 الملفات الرئيسية";
-                document.getElementById('backFolderBtn').style.display = 'none';
-            } else {
-                let folder = findFolder
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'))
