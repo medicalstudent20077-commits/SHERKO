@@ -43,7 +43,7 @@
             flex-direction: column;
             justify-content: space-between;
         }
-        /* Cinematic Background for Splash / Welcome Screen */
+        /* Cinematic Splash Screen & Background */
         .screen-splash {
             background: linear-gradient(135deg, #0b0f19 0%, #1e1b4b 50%, #0f172a 100%);
             position: relative;
@@ -105,6 +105,7 @@
             color: var(--text-color);
             margin-bottom: 15px;
             font-size: 1rem;
+            outline: none;
         }
         select.form-control {
             cursor: pointer;
@@ -121,10 +122,42 @@
             font-size: 1rem;
             margin-top: 10px;
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
+z-index: 10;
+            position: relative;
+        }
         .btn-main:hover {
             background: var(--accent-hover);
         }
+        /* Robot Hanging/Clinging Graphic Animation Style */
+        .hanging-robot-container {
+            position: relative;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .robot-mascot {
+            font-size: 4rem;
+            animation: bounceRobot 2s infinite ease-in-out;
+            display: inline-block;
+            filter: drop-shadow(0 8px 12px rgba(59, 130, 246, 0.4));
+        }
+        .robot-badge-clock {
+            position: absolute;
+            bottom: -5px;
+            right: -15px;
+            background: var(--yellow-btn);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            transform: rotate(10deg);
+        }
+        @keyframes bounceRobot {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(-3deg); }
+        }
+
         /* Bottom Navigation Bar */
         .bottom-nav {
             display: flex;
@@ -169,7 +202,7 @@
             display: block;
         }
         
-        /* Cinematic Grid Styles */
+        /* Grid Styles */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -214,7 +247,7 @@
             background-color: var(--yellow-btn);
             color: #000;
             border-radius: 50%;
-            display: flex;
+display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
@@ -249,7 +282,7 @@
             cursor: pointer;
             font-size: 0.85rem;
             white-space: nowrap;
-display: flex;
+            display: flex;
             align-items: center;
             gap: 5px;
         }
@@ -260,7 +293,7 @@ display: flex;
         }
         .ai-panel {
             background: var(--card-bg);
-            border: 1px solid var(--accent-color);
+            border: 1px title solid var(--accent-color);
             border-radius: 12px;
             padding: 15px;
             margin-top: 15px;
@@ -286,31 +319,37 @@ display: flex;
 </head>
 <body data-theme="dark">
 
-    <!-- Screen 1: Language Selection (Cinematic Splash Background) -->
+    <!-- Screen 1: Language Selection with Cinematic Background & Clinging Robot Mascot -->
     <div id="screenLang" class="screen screen-splash active">
-        <div style="font-size: 3.5rem; margin-bottom: 10px;">⚡</div>
+        <div class="hanging-robot-container">
+            <div class="robot-mascot">🤖</div>
+            <div class="robot-badge-clock" id="liveClockBadge">⏰ 00:00</div>
+        </div>
         <h1 style="margin-bottom: 8px; font-size: 1.6rem; color: #fff;">منصة شيركو الذكية</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 25px; font-size: 0.95rem;">اختر لغة التطبيق المفضلة للمتابعة</p>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;">اختر لغة التطبيق المفضلة للمتابعة</p>
         
         <div style="width: 100%; max-width: 320px;">
             <select id="languageSelector" class="form-control" style="text-align: center; font-weight: bold; background: rgba(19, 27, 46, 0.9);">
-                <option value="ar">اللغة العربية (الفصحى)</option>
-                <option value="en">English (الإنجليزية)</option>
-                <option value="fr">Français (الفرنسية)</option>
-                <option value="de">Deutsch (الألمانية)</option>
+                <option value="ar">🇸🇦 العربية (Arabic)</option>
+                <option value="en">🇬🇧 English (الإنجليزية)</option>
+                <option value="fr">🇫🇷 Français (الفرنسية)</option>
+                <option value="de">🇩🇪 Deutsch (الألمانية)</option>
+                <option value="es">🇪🇸 Español (الإسبانية)</option>
+                <option value="tr">🇹🇷 Türkçe (التركية)</option>
+                <option value="ku">☀️ کوردی (الكردية)</option>
             </select>
-            <button class="btn-main" onclick="proceedFromLanguage()">التالي ➔</button>
+            <button type="button" class="btn-main" onclick="proceedFromLanguage()">التالي ➔</button>
         </div>
     </div>
 
-    <!-- Screen 2: Account Login -->
+    <!-- Screen 2: Account Login & GitHub Sync -->
     <div id="screenAccount" class="screen screen-splash">
         <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
-        <h1 style="margin-bottom: 10px; font-size: 1.5rem;">تسجيل الحساب</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">أدخل بريدك الإلكتروني للمزامنة الشاملة والدخول</p>
+        <h1 style="margin-bottom: 10px; font-size: 1.5rem;">تسجيل الحساب والمزامنة</h1>
+<p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">أدخل بريدك الإلكتروني لتفعيل مزامنة GitHub Actions</p>
         <div style="width: 100%; max-width: 320px;">
             <input type="email" id="userEmail" class="form-control" placeholder="example@gmail.com" style="text-align: center;">
-            <button class="btn-main" onclick="submitAccount()">تسجيل ودخول للتطبيق</button>
+            <button type="button" class="btn-main" onclick="submitAccount()">تسجيل ودخول للتطبيق</button>
         </div>
     </div>
 
@@ -322,7 +361,7 @@ display: flex;
         </header>
 
         <div class="main-content-area">
-            <!-- Tab 1: Notes (Cinematic File & Folder System) -->
+            <!-- Tab 1: Notes & System Files -->
             <div id="tabNotes" class="tab-content active">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <h3 id="currentPathTitle" style="font-size: 1.1rem; color: var(--accent-color);">📁 الملفات الرئيسية</h3>
@@ -330,22 +369,22 @@ display: flex;
                 </div>
 
                 <div class="grid-container" id="notesGrid"></div>
-
                 <button class="floating-add-btn" onclick="openAddModal()">+</button>
             </div>
-<!-- Tab 2: Sherko Robot -->
+
+            <!-- Tab 2: Sherko Robot & Assistant -->
             <div id="tabRobot" class="tab-content">
                 <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
-                    <h3>🤖 المساعد الآلي شيركو</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">الروبوت العائم، التفاعل الصوتي الذكي، والتحكم التلقائي.</p>
+                    <h3>🤖 المساعد الآلي شيركو والروبوت الذكي</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">إدارة الروبوت العائم، الأوامر الصوتية التلقائية، وجينات الأتمتة الحديثة.</p>
                 </div>
             </div>
 
-            <!-- Tab 3: Design -->
+            <!-- Tab 3: Design & Reels / Room Engineering -->
             <div id="tabDesign" class="tab-content">
                 <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
                     <h3>🎨 منصة التصميم الذكي</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">محرر فيديو الريلز ومهندس ديكور غرف الجيمنج.</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">محرر فيديو الريلز، وتصميم واجهات الديكور والجيمنج المتقدمة.</p>
                 </div>
             </div>
         </div>
@@ -367,7 +406,7 @@ display: flex;
         </nav>
     </div>
 
-    <!-- Lecture Viewer Screen -->
+    <!-- Lecture Viewer & Ultimate AI Engine Screen -->
     <div id="lectureViewerScreen" style="display:none; flex:1; flex-direction:column; height:100vh; position:fixed; top:0; left:0; width:100%; background:var(--bg-color); z-index:200;">
         <header>
             <button class="icon-btn" onclick="closeLecture()">⬅ إغلاق المحاضرة</button>
@@ -376,10 +415,10 @@ display: flex;
         </header>
 
         <div style="flex:1; padding:20px; overflow-y:auto;">
-            <div class="lecture-toolbar">
+<div class="lecture-toolbar">
                 <button class="tool-btn" onclick="applyTool('pen')">🖊️ قلم تحديد</button>
-                <button class="tool-btn" onclick="applyTool('underline')">underline تسطير</button>
-                <button class="tool-btn" onclick="applyTool('bullets')">📌 رؤوس أقلام</button>
+                <button class="tool-btn" onclick="applyTool('underline')">📌 تسطير</button>
+                <button class="tool-btn" onclick="applyTool('bullets')">📋 رؤوس أقلام</button>
                 <button class="tool-btn" onclick="openImageGenerator()" style="background:var(--yellow-btn); color:#000; font-weight:bold;">🖼️ توليد صور</button>
                 <button class="tool-btn" onclick="openQuestionGenerator()" style="background:var(--success-color); color:#fff; font-weight:bold;">❓ توليد أسئلة</button>
             </div>
@@ -387,20 +426,20 @@ display: flex;
             <!-- Ultimate AI Expert Panel (Gemini, ChatGPT, Claude, NotebookLM, Kimi AI) -->
             <div id="aiExpertPanel" class="ai-panel">
                 <h4 style="color: var(--yellow-btn); margin-bottom: 8px;">⚡ مركز الذكاء الاصطناعي الخارق (Gemini + ChatGPT + Claude + NotebookLM + Kimi AI)</h4>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">اختر النموذج أو اطلب تحليل الملف وتوليد اختبارات علمية خارقة:</p>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">اختر النموذج، قم بتحليل المحاضرة، ودمج جينات الأتمتة:</p>
                 <textarea id="aiPromptInput" class="form-control" placeholder="اكتب سؤالك أو اطلب تلخيص المحاضرة وتوليد أسئلة امتحان دقيقة..."></textarea>
                 <button class="btn-main" onclick="runUltimateAI()">تنفيذ الأمر بالذكاء الخارق</button>
                 <div id="aiResponseOutput" style="margin-top: 10px; background: var(--bg-color); padding: 10px; border-radius: 8px; font-size: 0.9rem; display:none;"></div>
             </div>
 
             <div id="imageResultsArea" style="margin-top:15px; display:none;">
-<h4 style="font-size:0.95rem; margin-bottom:8px;">🖼️ النتائج المولدة (اسحب الصورة أو أضفها للمحاضرة):</h4>
+                <h4 style="font-size:0.95rem; margin-bottom:8px;">🖼️ النتائج المولدة:</h4>
                 <div id="imageGrid" style="display:flex; gap:10px; overflow-x:auto; padding-bottom:10px;"></div>
             </div>
 
             <div style="background: var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:20px; margin-top:15px; min-height:300px;">
                 <h3 id="lectureContentTitle" style="margin-bottom: 10px;">محاضرة علمية</h3>
-                <p id="lectureTextBody" style="color: var(--text-secondary); line-height: 1.6;">هنا يتم عرض نص المحاضرة، الملفات المضافة، ويمكنك استخدام أدوات الأقلام، توليد الصور، وتوليد الأسئلة بحرية كاملة...</p>
+                <p id="lectureTextBody" style="color: var(--text-secondary); line-height: 1.6;">هنا يتم عرض نص المحاضرة مع تفعيل جميع أدوات التنسيق، الجينات، والتوليد الذكي...</p>
             </div>
         </div>
     </div>
@@ -412,68 +451,39 @@ display: flex;
             <input type="text" id="newItemName" class="form-control" placeholder="اسم الفولدر أو المحاضرة...">
             <select id="newItemType" class="form-control">
                 <option value="file">ملف / محاضرة جديدة</option>
-                <option value="folder">فولدر رئيسي أو فرعي (مثل عملي/نظري)</option>
+                <option value="folder">فولدر رئيسي أو فرعي</option>
             </select>
             <button class="btn-main" onclick="createNewItem()">إضافة الآن</button>
             <button class="btn-main" onclick="closeAddModal()" style="background:#64748b; margin-top:5px;">إلغاء</button>
         </div>
     </div>
 
-    <!-- Settings Modal -->
+    <!-- Settings Modal & Admin Dashboard -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
-            <h2>الإعدادات</h2>
+            <h2>الإعدادات العامة</h2>
             <button class="btn-main" onclick="toggleTheme()" style="background: #475569; margin-bottom: 15px;">تبديل المظهر (ليلي/نهاري)</button>
             <input type="text" id="reportText" class="form-control" placeholder="الإبلاغ عن مشكلة...">
             <button class="btn-main" onclick="sendReport()" style="margin-bottom: 15px;">إرسال بلاغ</button>
             <div id="adminPanelArea" style="display:none; border-top:1px solid var(--border-color); padding-top:10px; margin-top:10px;">
-                <p style="color:var(--success-color); font-weight:bold; font-size:0.9rem;">أهلاً بك يا دكتور كرار (لوحة التحكم)</p>
-                <p id="inboxView" style="font-size:0.8rem; color:var(--text-secondary); margin-top:5px;">لا توجد بلاغات جديدة.</p>
+                <p style="color:var(--success-color); font-weight:bold; font-size:0.9rem;">أهلاً بك يا دكتور كرار (لوحة التحكم والجينات)</p>
+<p id="inboxView" style="font-size:0.8rem; color:var(--text-secondary); margin-top:5px;">لا توجد بلاغات جديدة.</p>
             </div>
             <button class="btn-main" onclick="toggleSettings()" style="background: #64748b;">إغلاق</button>
         </div>
     </div>
 
     <script>
+        // تحديث الساعة الحية للروبوت
+        setInterval(() => {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const clockEl = document.getElementById('liveClockBadge');
+            if(clockEl) clockEl.innerText = '⏰ ' + timeStr;
+        }, 1000);
+
         const ADMIN_EMAIL = "medical.student2007.7@gmail.com";
         let currentUserEmail = "";
 
         let fileSystem = [
-            { id: 1, name: "المرحلة الأولى", type: "folder", parent: null, children: [
-                { id: 11, name: "التشريح العملي", type: "folder", parent: 1, children: [
-                    { id: 111, name: "محاضرة الجمجمة - نظري", type: "file", parent: 11 },
-                    { id: 112, name: "محاضرة الأوعية - عملي", type: "file", parent: 11 }
-                ]},
-                { id: 12, name: "مادة الحاسوب", type: "file", parent: 1 }
-            ]}
-        ];
-        let currentFolderId = null;
-
-        function proceedFromLanguage() {
-            const selectedLang = document.getElementById('languageSelector').value;
-            localStorage.setItem('sherko_lang', selectedLang);
-            document.getElementById('screenLang').classList.remove('active');
-            document.getElementById('screenAccount').classList.add('active');
-        }
-
-        function submitAccount() {
-            const email = document.getElementById('userEmail').value.trim();
-            if(email) {
-                currentUserEmail = email;
-                document.getElementById('screenAccount').classList.remove('active');
-                enterMainApp();
-            } else {
-                alert('يرجى إدخال البريد الإلكتروني.');
-            }
-        }
-function enterMainApp() {
-            document.getElementById('screenMain').style.display = 'flex';
-            if(currentUserEmail === ADMIN_EMAIL) {
-                document.getElementById('headerTitle').innerHTML = 'شيركو 🚀 <span style="font-size:0.7rem; background:var(--success-color); padding:2px 6px; border-radius:4px;">المالك</span>';
-                document.getElementById('adminPanelArea').style.display = 'block';
-            }
-            renderFileSystem();
-        }
-
-        function switchTab(tabName, btnElement) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'))
+            { id: 1, name: "المرحلة الأولى", type:
