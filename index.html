@@ -1,305 +1,385 @@
-63420Colors.white<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHERKO SUPER AI - النسخة الأكاديمية الفائقة</title>
-<!-- Tailwind CSS لتصميم فخم وسريع -->
-<script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-<!-- FontAwesome للأيقونات -->
-<link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
-<!-- Google Fonts (Cairo) -->
-<link href="[https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap](https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap)" rel="stylesheet">
-<script>
-tailwind.config = {
-theme: {
-extend: {
-colors: {
-darkBg: '#090D16',
-cardBg: '#131B2E',
-cardHover: '#1E2A3E',
-neonCyan: '#00E5FF',
-neonGreen: '#00FF88',
-},
-fontFamily: {
-cairo: ['Cairo', 'sans-serif'],
-}
-}
-}
-}
-</script>
-<style>
-body { font-family: 'Cairo', sans-serif; background-color: #090D16; color: #ffffff; }
-.glow-cyan { box-shadow: 0 0 20px rgba(0, 229, 255, 0.3); }
-.glow-green { box-shadow: 0 0 20px rgba(0, 255, 136, 0.3); }
-/* تخصيص شريط التمرير */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #090D16; }
-::-webkit-scrollbar-thumb { background: #1E2A3E; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #00E5FF; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherko Ecosystem - Super Admin Edition</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --border-color: #334155;
+            --danger-color: #ef4444;
+            --success-color: #22c55e;
+        }
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-color: #0f172a;
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border-color: #cbd5e1;
+            --danger-color: #dc2626;
+            --success-color: #16a34a;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background 0.3s, color 0.3s;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .app-title {
+            font-size: 1.35rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+        .main-container {
+            flex: 1;
+            padding: 25px;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .hero-section {
+            text-align: center;
+            padding: 20px 0 35px 0;
+        }
+        .hero-section h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        .hero-section p {
+            color: #94a3b8;
+            font-size: 1.05rem;
+        }
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        .card h3 {
+            margin-top: 12px;
+            font-size: 1.25rem;
+        }
+        .card p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+        /* Floating Robot Widget */
+        .floating-robot {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--accent-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+align-items: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
+            z-index: 999;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-8px);}
+            60% {transform: translateY(-4px);}
+        }
+        footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid var(--border-color);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .modal-content h2 {
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        .btn-main {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+        .btn-main:hover {
+            background: var(--accent-hover);
+        }
+        .admin-badge {
+            background: var(--success-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            vertical-align: middle;
+        }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col bg-darkBg text-white selection:bg-neonCyan selection:text-black">
-<!-- شاشة التحقق / الاشتراك / الأدمن -->
-<div id="authScreen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-darkBg/95 backdrop-blur-md">
-<div class="max-w-md w-full bg-cardBg border border-neonCyan/20 rounded-3xl p-8 shadow-2xl glow-cyan relative">
-<!-- أيقونة النجوم (الضغط 3 مرات لتفعيل الأدمن) -->
-<div class="text-center cursor-pointer select-none mb-6" id="adminTriggerBtn" title="اضغط 3 مرات لوضع الأدمن">
-<div class="inline-flex p-4 rounded-2xl bg-neonCyan/10 text-neonCyan glow-cyan mb-3 transition transform hover:scale-110">
-<i class="fa-solid fa-stars text-5xl"></i>
-</div>
-<h1 class="text-2xl font-black tracking-wide">SHERKO SUPER AI</h1>
-<p class="text-xs text-gray-400 mt-1">المساعد الأكاديمي الأذكى لطلبة طب الأسنان</p>
-</div>
-<!-- محتوى شاشة الباقة -->
-<div id="paywallContent">
-<div class="bg-cardHover rounded-2xl p-5 border border-white/5 mb-6 text-center">
-<span class="text-xs px-3 py-1 bg-neonGreen/10 text-neonGreen rounded-full font-bold">عروض الحزمة الفائقة 🚀</span>
-<h2 class="text-xl font-bold mt-3">خطة 6 أشهر المتكاملة</h2>
-<div class="text-3xl font-black text-neonGreen my-2">$10.00 <span class="text-xs text-gray-400 font-normal">/ 6 أشهر</span></div>
-<p class="text-xs text-gray-400">توليد أسئلة MCQ، محرر محاضرات فائق، تدوين صوتي، وروبوت ذكي باللهجة العراقية.</p>
-</div>
-<button onclick="activateApp()" class="w-full py-4 bg-neonCyan text-black font-bold rounded-2xl shadow-lg hover:bg-neonCyan/90 transition transform active:scale-95 flex items-center justify-center gap-2">
-<span>اشترك الآن وادخل للنظام</span>
-<i class="fa-solid fa-rocket"></i>
-</button>
-</div>
-<!-- نافذة دخول الأدمن المخفية (تظهر بعد 3 ضغطات) -->
-<div id="adminPanel" class="hidden mt-4 pt-4 border-t border-white/10 animate-fade-in">
-<p class="text-xs text-neonCyan mb-2 font-bold"><i class="fa-solid fa-lock-open"></i> وضع المالك / Admin Access</p>
-<div class="flex gap-2">
-<input type="password" id="adminPassInput" placeholder="أدخل كود الأدمن (ADMIN2026)" class="flex-1 bg-darkBg border border-white/20 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-neonCyan">
-<button onclick="verifyAdmin()" class="bg-neonGreen text-black font-bold px-4 py-2 rounded-xl text-sm">تفعيل</button>
-</div>
-</div>
-</div>
-</div>
-<!-- شاشة اختيار اللهجة (تظهر بعد الدخول) -->
-<div id="dialectScreen" class="fixed inset-0 z-40 hidden flex items-center justify-center p-4 bg-darkBg/95">
-<div class="max-w-md w-full bg-cardBg border border-neonGreen/20 rounded-3xl p-8 shadow-2xl glow-green">
-<h2 class="text-xl font-bold mb-2 flex items-center gap-2">
-<i class="fa-solid fa-language text-neonGreen"></i> تخصيص لهجة المساعد
-</h2>
-<p class="text-xs text-gray-400 mb-6">اختر الطريقة التي يفضل "شيركو AI" مخاطبتك بها:</p>
-<div class="space-y-3 mb-6" id="dialectsList">
-<label class="flex items-center justify-between p-4 rounded-2xl bg-cardHover border border-neonCyan cursor-pointer transition">
-<span class="font-bold">العراقية 🇮🇶 (الأساسية)</span>
-<input type="radio" name="dialect" value="العراقية" checked class="accent-neonCyan">
-</label>
-<label class="flex items-center justify-between p-4 rounded-2xl bg-cardHover border border-white/5 cursor-pointer transition">
-<span class="font-bold">الفصحى 🌐</span>
-<input type="radio" name="dialect" value="الفصحى" class="accent-neonCyan">
-</label>
-<label class="flex items-center justify-between p-4 rounded-2xl bg-cardHover border border-white/5 cursor-pointer transition">
-<span class="font-bold">English 🇺🇸</span>
-<input type="radio" name="dialect" value="English" class="accent-neonCyan">
-</label>
-</div>
-<button onclick="goToDashboard()" class="w-full py-4 bg-neonGreen text-black font-bold rounded-2xl shadow-lg hover:bg-neonGreen/90 transition">
-دخول للنظام الأكاديمي ➔
-</button>
-</div>
-</div>
-<!-- لوحة التحكم الرئيسية (Workspace) -->
-<div id="mainDashboard" class="hidden flex-1 flex h-screen overflow-hidden">
-<!-- الشريط الجانبي الفخم -->
-<aside class="w-72 bg-cardBg border-r border-white/5 flex flex-col hidden md:flex">
-<div class="p-6 flex items-center gap-3 border-b border-white/5">
-<div class="w-10 h-10 rounded-xl bg-neonCyan flex items-center justify-center text-black font-black text-lg">D</div>
-<div>
-<h3 class="font-bold text-sm">Dr. Student</h3>
-<p class="text-[10px] text-neonGreen font-semibold">SHERKO VIP Active 🌟</p>
-</div>
-</div>
-<nav class="flex-1 p-4 space-y-1 overflow-y-auto">
-<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-neonCyan/10 text-neonCyan font-bold text-sm">
-<i class="fa-solid fa-book-open"></i>
-<span>الملاحظات والمحاضرات</span>
-</a>
-<a href="#" onclick="showFolderView()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cardHover text-gray-300 text-sm transition">
-<i class="fa-solid fa-folder-tree text-amber-400"></i>
-<span>المجلدات والصفوف</span>
-</a>
-<a href="#" onclick="openAiQuizModal()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cardHover text-gray-300 text-sm transition">
-<i class="fa-solid fa-brain text-neonGreen"></i>
-<span>مولد الاختبارات الذكي</span>
-</a>
-</nav>
-<div class="p-4 border-t border-white/5">
-<button onclick="resetAppSession()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-500/10 text-red-400 text-sm transition">
-<i class="fa-solid fa-arrow-right-from-bracket"></i>
-<span>تسجيل الخروج / إعادة الضبط</span>
-</button>
-</div>
-</aside>
-<!-- المحتوى الرئيسي (استوديو المحاضرات والمجلدات) -->
-<main class="flex-1 flex flex-col h-full overflow-hidden">
-<!-- شريط علوي -->
-<header class="h-16 bg-cardBg border-b border-white/5 px-6 flex items-center justify-between">
-<div class="flex items-center gap-4">
-<button class="md:hidden text-gray-400 hover:text-white"><i class="fa-solid fa-bars text-xl"></i></button>
-<h2 class="font-bold text-lg flex items-center gap-2">
-<span>استوديو الملاحظات الأكاديمي</span>
-<span class="text-xs px-2 py-0.5 bg-neonCyan/10 text-neonCyan rounded-md">V2.6 Pro</span>
-</h2>
-</div>
-<div class="flex items-center gap-3">
-<button onclick="openLectureReader()" class="px-4 py-2 bg-neonCyan text-black font-bold rounded-xl text-sm flex items-center gap-2 shadow-lg hover:bg-neonCyan/90 transition">
-<i class="fa-solid fa-file-medical"></i>
-<span>محاضرة اليوم (Parasitology)</span>
-</button>
-</div>
-</header>
-<!-- مساحة العرض (مجلدات ومحاضرات) -->
-<div id="contentArea" class="flex-1 p-6 md:p-8 overflow-y-auto">
-<div class="flex justify-between items-center mb-6">
-<h3 class="text-xl font-bold">مجلدات المرحلة الأولى</h3>
-<button onclick="alert('تم تفعيل خاصية إنشاء مجلد جديد بذكاء شيركو!')" class="text-xs text-neonCyan bg-neonCyan/10 px-3 py-1.5 rounded-lg hover:bg-neonCyan/25 transition">
-<i class="fa-solid fa-plus"></i> مجلد جديد
-</button>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-<!-- كارد مجلد -->
-<div onclick="openLectureReader()" class="bg-cardBg border border-white/5 hover:border-neonCyan/50 rounded-2xl p-5 cursor-pointer transition transform hover:-translate-y-1 shadow-lg group">
-<div class="flex items-center justify-between mb-4">
-<i class="fa-solid fa-folder text-4xl text-amber-400 group-hover:scale-110 transition"></i>
-<span class="text-xs text-gray-400 bg-cardHover px-2 py-1 rounded">106 ملف</span>
-</div>
-<h4 class="font-bold text-base mb-1">المرحلة الأولى - داء الليشمانيات</h4>
-<p class="text-xs text-gray-400">آخر تحديث: اليوم، 08:00 م</p>
-</div>
-<!-- كارد ملف PDF -->
-<div onclick="openLectureReader()" class="bg-cardBg border border-white/5 hover:border-neonCyan/50 rounded-2xl p-5 cursor-pointer transition transform hover:-translate-y-1 shadow-lg group">
-<div class="flex items-center justify-between mb-4">
-<i class="fa-solid fa-file-pdf text-4xl text-neonCyan group-hover:scale-110 transition"></i>
-<span class="text-xs text-neonGreen bg-neonGreen/10 px-2 py-1 rounded font-bold">جاهز للدراسة</span>
-</div>
-<h4 class="font-bold text-base mb-1">Parasitology Lecture 1</h4>
-<p class="text-xs text-gray-400">شامل الترجمة والذكاء الاصطناعي</p>
-</div>
-</div>
-</div>
-</main>
-</div>
-<!-- شاشة قارئ ومحرر المحاضرات (Advanced Reader - بديل Jnotes المطور) -->
-<div id="readerScreen" class="fixed inset-0 z-50 hidden flex flex-col bg-darkBg">
-<header class="h-16 bg-cardBg border-b border-white/5 px-6 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<button onclick="closeLectureReader()" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-arrow-right text-lg"></i></button>
-<div>
-<h3 class="font-bold text-sm">Parasitology - Leishmaniasis (Lecture 1)</h3>
-<p class="text-[10px] text-neonCyan">أدوات التحرير العائمة نشطة</p>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<button onclick="triggerVisualAi()" class="px-3 py-1.5 bg-neonCyan/10 text-neonCyan hover:bg-neonCyan/20 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
-<i class="fa-solid fa-image"></i> توليد رسوم AI
-</button>
-<button onclick="openAiQuizModal()" class="px-3 py-1.5 bg-neonGreen/10 text-neonGreen hover:bg-neonGreen/20 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
-<i class="fa-solid fa-brain"></i> أسئلة MCQ (20)
-</button>
-</div>
-</header>
-<div class="flex-1 flex relative overflow-hidden">
-<!-- شريط الأدوات العائم المتطور (Glassmorphism Floating Toolbar) -->
-<div class="absolute left-4 top-4 z-10 bg-cardBg/95 backdrop-blur-md border border-neonCyan/30 rounded-2xl p-2 shadow-2xl flex flex-col items-center gap-3">
-<button class="w-10 h-10 rounded-xl bg-neonCyan/20 text-neonCyan flex items-center justify-center hover:bg-neonCyan hover:text-black transition" title="قلم"><i class="fa-solid fa-pen-nib"></i></button>
-<button class="w-10 h-10 rounded-xl text-gray-300 flex items-center justify-center hover:bg-cardHover hover:text-neonCyan transition" title="تحديد (Highlighter)"><i class="fa-solid fa-highlighter"></i></button>
-<button class="w-10 h-10 rounded-xl text-gray-300 flex items-center justify-center hover:bg-cardHover hover:text-neonCyan transition" title="تحديد أداة Lasso"><i class="fa-solid fa-lasso"></i></button>
-<button class="w-10 h-10 rounded-xl text-gray-300 flex items-center justify-center hover:bg-cardHover hover:text-red-400 transition" title="ممحاة"><i class="fa-solid fa-eraser"></i></button>
-<button class="w-10 h-10 rounded-xl text-gray-300 flex items-center justify-center hover:bg-cardHover hover:text-neonCyan transition" title="ملاحظة صوتية"><i class="fa-solid fa-microphone"></i></button>
-<hr class="w-6 border-white/10 my-1">
-<!-- لوحة الألوان -->
-<div class="w-5 h-5 rounded-full bg-neonCyan cursor-pointer border-2 border-white"></div>
-<div class="w-5 h-5 rounded-full bg-neonGreen cursor-pointer"></div>
-<div class="w-5 h-5 rounded-full bg-amber-400 cursor-pointer"></div>
-<div class="w-5 h-5 rounded-full bg-pink-500 cursor-pointer"></div>
-</div>
-<!-- عرض المحاضرة (نص إنجليزي وترجمته الفورية) -->
-<div class="flex-1 p-6 md:p-12 overflow-y-auto flex justify-center">
-<div class="max-w-3xl w-full bg-white text-gray-900 rounded-3xl p-8 md:p-12 shadow-2xl space-y-8">
-<div class="border-b pb-6">
-<span class="text-xs bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded-full">محاضرة معتمدة 🩺</span>
-<h1 class="text-2xl md:text-3xl font-black mt-3 text-slate-900">Leishmaniasis in humans is caused by more than 20 species of Leishmania.</h1>
-<p class="text-lg font-semibold text-purple-700 mt-2">داء الليشمانيات في البشر سببه أكثر من 20 نوعاً من الليشمانيا.</p>
-</div>
-<div>
-<h2 class="text-2xl md:text-3xl font-black text-slate-900">Risk factors include poverty, malnutrition, deforestation and urbanization.</h2>
-<p class="text-lg font-semibold text-purple-700 mt-2">وتشمل عوامل الخطر الفقر وسوء التغذية وإزالة الغابات والتحضر.</p>
-</div>
-<!-- مساحة تفاعلية للرسم أو الملاحظات -->
-<div class="p-6 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-300 text-center">
-<i class="fa-solid fa-hand-pointer text-slate-400 text-2xl mb-2"></i>
-<p class="text-sm text-slate-600 font-bold">اضغط هنا لإضافة تعليق صوتي أو رسم توضيحي فوق المحاضرة</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- نافذة منبثقة لاختبارات الذكاء الاصطناعي (AI Quiz Modal) -->
-<div id="aiQuizModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-darkBg/9ental backdrop-blur-md">
-<div class="max-w-md w-full bg-cardBg border border-neonGreen/30 rounded-3xl p-6 shadow-2xl glow-green">
-<div class="flex items-center justify-between mb-4">
-<h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-brain text-neonGreen"></i> مولد الأسئلة الذكي</h3>
-<button onclick="closeAiQuizModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-</div>
-<p class="text-xs text-gray-300 mb-6">يقوم الذكاء الاصطناعي الآن بتحليل تفاصيل محاضرة داء الليشمانيات لتوليد 20 سؤال MCQ واختبار معلوماتك الطبية بدقة.</p>
-<button onclick="startQuizSimulation()" class="w-full py-3.5 bg-neonGreen text-black font-bold rounded-xl shadow-lg hover:bg-neonGreen/90 transition">
-توليد وبدء الاختبار الآن ⚡
-</button>
-</div>
-</div>
-<!-- سكربت التفاعل وتحويل التطبيق -->
-<script>
-// تفعيل أزرار الأدمن عند النقر 3 مرات
-let clickCount = 0;
-document.getElementById('adminTriggerBtn').addEventListener('click', () => {
-clickCount++;
-if (clickCount >= 3) {
-document.getElementById('adminPanel').classList.remove('hidden');
-clickCount = 0;
-}
-});
-function verifyAdmin() {
-const pass = document.getElementById('adminPassInput').value;
-if (pass === 'ADMIN2026') {
-alert('🔓 تم تفعيل وضع الأدمن المالك (Admin Access) بنجاح!');
-activateApp();
-} else {
-alert('❌ الكود غير صحيح!');
-}
-}
-function activateApp() {
-document.getElementById('authScreen').classList.add('hidden');
-document.getElementById('dialectScreen').classList.remove('hidden');
-}
-function goToDashboard() {
-document.getElementById('dialectScreen').classList.add('hidden');
-document.getElementById('mainDashboard').classList.remove('hidden');
-document.getElementById('mainDashboard').classList.add('flex');
-}
-function openLectureReader() {
-document.getElementById('readerScreen').classList.remove('hidden');
-}
-function closeLectureReader() {
-document.getElementById('readerScreen').classList.add('hidden');
-}
-function openAiQuizModal() {
-document.getElementById('aiQuizModal').classList.remove('hidden');
-}
-function closeAiQuizModal() {
-document.getElementById('aiQuizModal').classList.add('hidden');
-}
-function startQuizSimulation() {
-closeAiQuizModal();
-alert('✨ تم توليد 20 سؤال MCQ بنجاح واستخراج الرسوم التوضيحية للمحاضرة!');
-}
-function triggerVisualAi() {
-alert('🖼️ قام الذكاء الاصطناعي بتوليد واستخراج 4 صور توضيحية لدورة حيات طفيل الليشمانيا بنجاح!');
-}
-function resetAppSession() {
-location.reload();
-}
-</script>
+<body data-theme="dark">
+
+    <header>
+        <div class="app-title">
+            <span>🤖</span> Sherko AI Ecosystem
+        </div>
+        <div class="header-icons">
+            <button class="icon-btn" onclick="openLoginModal()" title="تسجيل الدخول / المالك">👤</button>
+            <button class="icon-btn" onclick="toggleSettings()" title="الإعدادات">⚙️</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="hero-section">
+            <h1>مرحباً بك يا دكتور كرار</h1>
+            <p>النظام الذكي المتكامل للدارسة، المساعد الآلي المتفاعل، وأدوات التصميم الخارقة بالذكاء الاصطناعي</p>
+        </div>
+
+        <div class="sections-grid">
+            <div class="card" onclick="openSection('notes')">
+                <span style="font-size: 2.5rem;">📚</span>
+                <h3>قسم الملاحظات (JNotes AI)</h3>
+                <p>إدارة مجلدات المحاضرات PDF، طرح الأسئلة، وتوليد أكثر من 10 صور باللحظة عبر Gemini & ChatGPT & NotebookLM.</p>
+            </div>
+
+            <div class="card" onclick="openSection('robot')">
+                <span style="font-size: 2.5rem;">🤖</span>
+                <h3>المساعد الآلي شيركو</h3>
+                <p>روبوت عائم يتفاعل مع الشاشة، يشاهد المباريات معك، يفتح التطبيقات، وينفذ المهام بالأوامر الصوتية والذكاء الخارق.</p>
+            </div>
+
+            <div class="card" onclick="openSection('design')">
+                <span style="font-size: 2.5rem;">🎨</span>
+                <h3>منصة التصميم والديكور</h3>
+                <p>محرر فيديو ذكي (AI Video Editor) لقص الريلز وترجمة النصوص، ومهندس ديكور افتراضي لغرف الـ Gaming.</p>
+            </div>
+        </div>
+    </div>
+<div class="floating-robot" onclick="activateRobot()" title="شيركو متفاعل معك">
+        🤖
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 - صُمم وبتنفيذ خاص لـ دكتور كرار <span id="adminStatus"></span></p>
+    </footer>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h2>إعدادات التطبيق</h2>
+            
+            <label style="display:block; margin-bottom:8px; font-weight:600;">المظهر العام:</label>
+            <button class="btn-main" onclick="toggleTheme()" style="background: #475569; margin-bottom: 20px;">تبديل الوضع (الليلي / النهاري)</button>
+            
+            <label style="display:block; margin-bottom:8px; font-weight:600;">الإبلاغ عن مشكلة:</label>
+            <input type="text" id="reportInput" class="form-control" placeholder="اشرح المشكلة أو البلاغ...">
+            <button class="btn-main" onclick="submitReport()" style="margin-bottom: 20px;">إرسال إلى لوحة المالك</button>
+            
+            <label style="display:block; margin-bottom:8px; font-weight:600;">اللغة والدالله:</label>
+            <select class="form-control" id="langSelect">
+                <option value="ar-iq">العربية (اللهجة العراقية)</option>
+                <option value="ar-gulf">العربية (الخليجية)</option>
+                <option value="ar-egy">العربية (المصرية)</option>
+                <option value="en">English (US/UK)</option>
+            </select>
+            
+            <button class="btn-main" onclick="toggleSettings()" style="background: #64748b; margin-top: 15px;">إغلاق الإعدادات</button>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div id="loginFormContainer">
+                <h2>تسجيل الدخول</h2>
+                <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:15px;">أدخل بريدك الإلكتروني للتحقق من الصلاحيات والاشتراك:</p>
+                <input type="email" id="emailInput" class="form-control" placeholder="example@gmail.com">
+                <button class="btn-main" onclick="handleLogin()">دخول للنظام</button>
+            </div>
+            
+            <div id="adminPanelContainer" style="display: none;">
+                <h2>لوحة تحكم المالك <span class="admin-badge">Super Admin</span></h2>
+                <p style="color: var(--success-color); font-weight: bold; margin-bottom: 15px;">مرحباً بك يا دكتور كرار (المالك الرسمي)</p>
+                
+                <div style="background: var(--bg-color); padding: 15px; border-radius: 10px; margin-bottom: 15px; border:1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 8px;">📥 صندوق الرسائل والبلاغات الواردة:</h4>
+                    <p id="inboxMessages" style="font-size: 0.85rem; color: #94a3b8;">لا توجد بلاغات جديدة حالياً.</p>
+                </div>
+
+                <div style="background: var(--bg-color); padding: 15px; border-radius: 10px; margin-bottom: 15px; border:1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 8px;">👥 إدارة الاشتراكات والحظر:</h4>
+                    <button class="btn-main" onclick="alert('تم تفعيل فحص اشتراك الـ 6 أشهر بنجاح')" style="margin-bottom:8px; font-size:0.85rem;">التحقق من حالة اشتراكات المستخدمين</button>
+                </div>
+
+                <button class="btn-main" onclick="logoutAdmin()" style="background: var(--danger-color);">تسجيل الخروج من لوحة التحكم</button>
+            </div>
+            <button class="btn-main" onclick="closeLoginModal()" style="background: #64748b; margin-top: 10px;">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        const SUPER_ADMIN_EMAIL = "medical.student2007.7@gmail.com";
+
+        function toggleSettings() {
+            const modal = document.getElementById('settingsModal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('emailInput').value.trim();
+            if (email === SUPER_ADMIN_EMAIL) {
+                document.getElementById('loginFormContainer').style.display = 'none';
+                document.getElementById('adminPanelContainer').style.display = 'block';
+                document.getElementById('adminStatus').innerHTML = '<span class="admin-badge">مدير التطبيق</span>';
+                alert('مرحباً بك يا دكتور كرار! تم تفعيل صلاحيات الـ Super Admin بنجاح.');
+            } else if(email) {
+                alert('تم تسجيل الدخول بنجاح كمستخدم عسكري/عادي (اشتراك فعال لمدة 6 أشهر).');
+                closeLoginModal();
+            } else {
+                alert('يرجى إدخال البريد الإلكتروني بشكل صحيح.');
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('adminPanelContainer').style.display = 'none';
+            document.getElementById('loginFormContainer').style.display = 'block';
+            document.getElementById('adminStatus').innerHTML = '';
+            document.getElementById('emailInput').value = '';
+        }
+
+        function submitReport() {
+            const reportText = document.getElementById('reportInput').value.trim();
+            if(reportText) {
+                document.getElementById('inboxMessages').innerText = "بلاغ جديد: " + reportText;
+                alert('تم إرسال بلاغك بنجاح إلى لوحة تحكم المالك (دكتور كرار).');
+                document.getElementById('reportInput').value = '';
+                toggleSettings();
+            } else {
+                alert('يرجى كتابة نص البلاغ أولاً.');
+            }
+        }
+
+        function openSection(sectionName) {
+            if(sectionName === 'notes') {
+                alert('جاري فتح قسم الملاحظات الذكية JNotes وربط ملفات الـ PDF مع Gemini & ChatGPT...');
+            } else if(sectionName === 'robot') {
+                alert('تم تفعيل الروبوت شيركو! سيظهر لك الآن عائماً في زاوية الشاشة للتفاعل مع الفيديوهات والأوامر الصوتية.');
+            } else if(sectionName === 'design') {
+                alert('جاري فتح منصة تصميم الفيديوهات الذكية وديكورات غرف الـ Gaming...');
+            }
+        }
+
+        function activateRobot() {
+            alert('🤖 شيركو: أهلاً بك يا دكتور! أنا واقف بالزاوية وأراقب الشاشة، جاهز لأي أمر صوتي أو ضغطة زر.');
+        }
+    </script>
 </body>
 </html>
