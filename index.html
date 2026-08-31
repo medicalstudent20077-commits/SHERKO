@@ -3,27 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sherko App</title>
+    <title>Sherko App - Ultimate Edition</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
             --text-color: #f8fafc;
+            --text-secondary: #94a3b8;
             --accent-color: #3b82f6;
             --accent-hover: #2563eb;
-            --border-color: #334155;
+            --border-color: #1e293b;
+            --yellow-btn: #facc15;
+            --yellow-hover: #eab308;
             --danger-color: #ef4444;
             --success-color: #22c55e;
         }
         [data-theme="light"] {
-            --bg-color: #f8fafc;
+            --bg-color: #f1f5f9;
             --card-bg: #ffffff;
             --text-color: #0f172a;
+            --text-secondary: #64748b;
             --accent-color: #2563eb;
             --accent-hover: #1d4ed8;
             --border-color: #e2e8f0;
-            --danger-color: #dc2626;
-            --success-color: #16a34a;
+            --yellow-btn: #facc15;
+            --yellow-hover: #eab308;
         }
         * {
             box-sizing: border-box;
@@ -59,7 +63,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 20px;
+            padding: 14px 20px;
             background-color: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
         }
@@ -100,7 +104,7 @@
         .btn-main:hover {
             background: var(--accent-hover);
         }
-        /* Bottom Navigation Bar (Instagram Style) */
+        /* Bottom Navigation Bar */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -117,24 +121,24 @@
         .nav-item {
             background: none;
             border: none;
-            color: #94a3b8;
+            color: var(--text-secondary);
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-size: 0.8rem;
+font-size: 0.8rem;
             cursor: pointer;
             gap: 4px;
         }
         .nav-item span:first-child {
-            font-size: 1.5rem;
-}
+            font-size: 1.4rem;
+        }
         .nav-item.active {
             color: var(--accent-color);
         }
         .main-content-area {
             flex: 1;
             padding: 20px;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
             overflow-y: auto;
         }
         .tab-content {
@@ -143,83 +147,189 @@
         .tab-content.active {
             display: block;
         }
-        .card {
+        
+        /* Cinematic UI Styles for Notes & Lecture View */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .folder-card, .file-card, .new-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 20px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            min-height: 140px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .new-card {
+            border: 2px dashed var(--border-color);
+            background: transparent;
+        }
+        .plus-circle {
+            width: 45px; height: 45px;
+            background-color: var(--yellow-btn);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(250,204,21,0.4);
+        }
+        .floating-add-btn {
+            position: fixed;
+            bottom: 80px;
+            left: 25px;
+            width: 55px; height: 55px;
+            background-color: var(--yellow-btn);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 101;
+            border: none;
+        }
+        .floating-add-btn:hover {
+            background-color: var(--yellow-hover);
+        }
+
+        /* Lecture & AI Toolbar */
+        .lecture-toolbar {
+            display: flex;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
             margin-bottom: 15px;
-            text-align: right;
+            overflow-x: auto;
+            align-items: center;
+        }
+        .tool-btn {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .tool-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+        .ai-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
         }
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.6);
+            background-color: rgba(0,0,0,0.7);
             justify-content: center; align-items: center; z-index: 1000;
-        }
+}
         .modal-content {
             background-color: var(--card-bg);
             padding: 25px;
-            border-radius: 12px;
+            border-radius: 14px;
             width: 90%;
-            max-width: 400px;
+            max-width: 450px;
             border: 1px solid var(--border-color);
+            text-align: right;
         }
     </style>
 </head>
 <body data-theme="dark">
 
+    <!-- Screen 1: Language Selection -->
     <div id="screenLang" class="screen active">
         <h1 style="margin-bottom: 15px;">اختر لغة التطبيق</h1>
-        <p style="color: #94a3b8; margin-bottom: 25px;">Select your preferred language / اللهجة المناسبة</p>
+        <p style="color: var(--text-secondary); margin-bottom: 25px;">Select your preferred language</p>
         <button class="btn-main" onclick="selectLanguage('ar-iq')">العربية (اللهجة العراقية 🇮🇶)</button>
         <button class="btn-main" onclick="selectLanguage('ar-gulf')">العربية (الخليجية 🇸🇦)</button>
         <button class="btn-main" onclick="selectLanguage('ar-egy')">العربية (المصرية 🇪🇬)</button>
         <button class="btn-main" onclick="selectLanguage('en')" style="background: #475569;">English 🇺🇸</button>
     </div>
 
+    <!-- Screen 2: Account Login -->
     <div id="screenAccount" class="screen">
         <h1 style="margin-bottom: 10px;">إضافة حساب</h1>
-        <p style="color: #94a3b8; margin-bottom: 20px;">سجل بريدك الإلكتروني للمتابعة والدخول مباشرة</p>
+        <p style="color: var(--text-secondary); margin-bottom: 20px;">سجل بريدك الإلكتروني للمتابعة والدخول</p>
         <input type="email" id="userEmail" class="form-control" placeholder="example@gmail.com">
         <button class="btn-main" onclick="submitAccount()">تسجيل ودخول للتطبيق</button>
     </div>
 
+    <!-- Screen 3: Main App -->
     <div id="screenMain" style="display: none; flex: 1; flex-direction: column; height: 100vh;">
         <header>
-            <div class="app-title" id="headerTitle">تطبيق شيركو 🚀</div>
+            <div class="app-title" id="headerTitle">شيركو 🚀</div>
             <button class="icon-btn" onclick="toggleSettings()" title="الإعدادات">⚙️</button>
         </header>
 
         <div class="main-content-area">
+            <!-- Tab 1: Notes (Cinematic File & Folder System) -->
             <div id="tabNotes" class="tab-content active">
-                <div class="card">
-                    <h3>📚 قسم الملاحظات (JNotes AI)</h3>
-                    <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;">إدارة مجلدات الـ PDF، طرح الأسئلة عبر Gemini و ChatGPT و NotebookLM، وتوليد الصور.</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 id="currentPathTitle" style="font-size: 1.1rem; color: var(--accent-color);">📁 الملفات الرئيسية</h3>
+                    <button id="backFolderBtn" style="display:none; background:none; border:none; color:var(--text-secondary); cursor:pointer;" onclick="goBackFolder()">⬅ رجوع</button>
                 </div>
+
+                <!-- Cinematic Grid Container -->
+                <div class="grid-container" id="notesGrid">
+                    <!-- Dynamic Items will load here -->
+                </div>
+
+                <!-- Floating Yellow Add Button -->
+                <button class="floating-add-btn" onclick="openAddModal()">+</button>
             </div>
 
+            <!-- Tab 2: Sherko Robot -->
             <div id="tabRobot" class="tab-content">
-                <div class="card">
+                <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
                     <h3>🤖 المساعد الآلي شيركو</h3>
-                    <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;">الروبوت العائم الذي يشاهد المباريات، يتفاعل بالأوامر الصوتية، ويضغط الأزرار بدلاً منك.</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">الروبوت العائم، التفاعل الصوتي الذكي، والتحكم التلقائي.</p>
                 </div>
             </div>
 
+            <!-- Tab 3: Design -->
             <div id="tabDesign" class="tab-content">
-                <div class="card">
-                    <h3>🎨 منصة التصميم والديكور</h3>
-                    <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;">محرر فيديو ذكي لتقطيع الريلز، وترجمة النصوص، ومهندس ديكور غرف الجيمنج.</p>
+                <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
+                    <h3>🎨 منصة التصميم الذكي</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">محرر فيديو الريلز ومهندس ديكور غرف الجيمنج.</p>
                 </div>
             </div>
         </div>
 
+        <!-- Bottom Navigation Bar -->
         <nav class="bottom-nav">
-            <button class="nav-item active" onclick="switchTab('notes', this)">
+<button class="nav-item active" onclick="switchTab('notes', this)">
                 <span>📚</span>
                 <span>الملاحظات</span>
-</button>
+            </button>
             <button class="nav-item" onclick="switchTab('robot', this)">
                 <span>🤖</span>
                 <span>شيركو</span>
@@ -231,6 +341,62 @@
         </nav>
     </div>
 
+    <!-- Lecture Viewer Screen (Hidden by default, opens when clicking a file) -->
+    <div id="lectureViewerScreen" style="display:none; flex:1; flex-direction:column; height:100vh; position:fixed; top:0; left:0; width:100%; background:var(--bg-color); z-index:200;">
+        <header>
+            <button class="icon-btn" onclick="closeLecture()">⬅ إغلاق المحاضرة</button>
+            <div id="lectureTitleHeader" style="font-weight:bold; color:var(--accent-color);">اسم المحاضرة</div>
+            <button class="icon-btn" onclick="toggleAIExpertPanel()">🤖 الذكاء الخارق</button>
+        </header>
+
+        <div style="flex:1; padding:20px; overflow-y:auto;">
+            <!-- Cinematic Lecture Toolbar -->
+            <div class="lecture-toolbar">
+                <button class="tool-btn" onclick="applyTool('pen')">🖊️ قلم تحديد</button>
+                <button class="tool-btn" onclick="applyTool('underline')">underline تسطير</button>
+                <button class="tool-btn" onclick="applyTool('bullets')">📌 رؤوس أقلام</button>
+                <button class="tool-btn" onclick="openImageGenerator()" style="background:var(--yellow-btn); color:#000; font-weight:bold;">🖼️ توليد صور</button>
+                <button class="tool-btn" onclick="openQuestionGenerator()" style="background:var(--success-color); color:#fff; font-weight:bold;">❓ توليد أسئلة</button>
+            </div>
+
+            <!-- Ultimate AI Expert Panel (Gemini, ChatGPT, Claude, NotebookLM, Kimi AI) -->
+            <div id="aiExpertPanel" class="ai-panel">
+                <h4 style="color: var(--yellow-btn); margin-bottom: 8px;">⚡ مركز الذكاء الاصطناعي الخارق (Gemini + ChatGPT + Claude + NotebookLM + Kimi AI)</h4>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">اختر النموذج أو اطلب تحليل الملف وتوليد اختبارات علمية خارقة:</p>
+                <textarea id="aiPromptInput" class="form-control" placeholder="اكتب سؤالك أو اطلب تلخيص المحاضرة وتوليد أسئلة امتحان دقيقة..."></textarea>
+                <button class="btn-main" onclick="runUltimateAI()">تنفيذ الأمر بالذكاء الخارق</button>
+                <div id="aiResponseOutput" style="margin-top: 10px; background: var(--bg-color); padding: 10px; border-radius: 8px; font-size: 0.9rem; display:none;"></div>
+            </div>
+
+            <!-- Image Results Area -->
+            <div id="imageResultsArea" style="margin-top:15px; display:none;">
+                <h4 style="font-size:0.95rem; margin-bottom:8px;">🖼️ النتائج المولدة (اسحب الصورة أو أضفها للمحاضرة):</h4>
+                <div id="imageGrid" style="display:flex; gap:10px; overflow-x:auto; padding-bottom:10px;"></div>
+            </div>
+
+            <!-- Lecture Main Content Box -->
+            <div style="background: var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:20px; margin-top:15px; min-height:300px;">
+                <h3 id="lectureContentTitle" style="margin-bottom: 10px;">محاضرة علمية</h3>
+                <p id="lectureTextBody" style="color: var(--text-secondary); line-height: 1.6;">هنا يتم عرض نص المحاضرة، الملفات المضافة، ويمكنك استخدام أدوات الأقلام، توليد الصور، وتوليد الأسئلة بحرية كاملة...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Add New Folder or File -->
+<div id="addModal" class="modal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 15px;">إضافة عنصر جديد</h3>
+            <input type="text" id="newItemName" class="form-control" placeholder="اسم الفولدر أو المحاضرة...">
+            <select id="newItemType" class="form-control">
+                <option value="file">ملف / محاضرة جديدة</option>
+                <option value="folder">فولدر رئيسي أو فرعي (مثل عملي/نظري)</option>
+            </select>
+            <button class="btn-main" onclick="createNewItem()">إضافة الآن</button>
+            <button class="btn-main" onclick="closeAddModal()" style="background:#64748b; margin-top:5px;">إلغاء</button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <h2>الإعدادات</h2>
@@ -239,7 +405,7 @@
             <button class="btn-main" onclick="sendReport()" style="margin-bottom: 15px;">إرسال بلاغ</button>
             <div id="adminPanelArea" style="display:none; border-top:1px solid var(--border-color); padding-top:10px; margin-top:10px;">
                 <p style="color:var(--success-color); font-weight:bold; font-size:0.9rem;">أهلاً بك يا دكتور كرار (لوحة التحكم)</p>
-                <p id="inboxView" style="font-size:0.8rem; color:#94a3b8; margin-top:5px;">لا توجد بلاغات جديدة.</p>
+                <p id="inboxView" style="font-size:0.8rem; color:var(--text-secondary); margin-top:5px;">لا توجد بلاغات جديدة.</p>
             </div>
             <button class="btn-main" onclick="toggleSettings()" style="background: #64748b;">إغلاق</button>
         </div>
@@ -248,6 +414,18 @@
     <script>
         const ADMIN_EMAIL = "medical.student2007.7@gmail.com";
         let currentUserEmail = "";
+
+        // File & Folder structure data
+        let fileSystem = [
+            { id: 1, name: "المرحلة الأولى", type: "folder", parent: null, children: [
+                { id: 11, name: "التشريح العملي", type: "folder", parent: 1, children: [
+                    { id: 111, name: "محاضرة الجمجمة - نظري", type: "file", parent: 11 },
+                    { id: 112, name: "محاضرة الأوعية - عملي", type: "file", parent: 11 }
+                ]},
+                { id: 12, name: "مادة الحاسوب", type: "file", parent: 1 }
+            ]}
+        ];
+        let currentFolderId = null; // null means root
 
         function selectLanguage(lang) {
             document.getElementById('screenLang').classList.remove('active');
@@ -268,44 +446,31 @@
         function enterMainApp() {
             document.getElementById('screenMain').style.display = 'flex';
             if(currentUserEmail === ADMIN_EMAIL) {
-                document.getElementById('headerTitle').innerHTML = 'تطبيق شيركو 🚀 <span style="font-size:0.7rem; background:var(--success-color); padding:2px 6px; border-radius:4px;">المالك</span>';
+                document.getElementById('headerTitle').innerHTML = 'شيركو 🚀 <span style="font-size:0.7rem; background:var(--success-color); padding:2px 6px; border-radius:4px;">المالك</span>';
                 document.getElementById('adminPanelArea').style.display = 'block';
             }
+            renderFileSystem();
         }
 
         function switchTab(tabName, btnElement) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-
-            if(tabName === 'notes') {
-                document.getElementById('tabNotes').classList.add('active');
-            } else if(tabName === 'robot') {
-                document.getElementById('tabRobot').classList.add('active');
-            } else if(tabName === 'design') {
-                document.getElementById('tabDesign').classList.add('active');
-            }
+if(tabName === 'notes') document.getElementById('tabNotes').classList.add('active');
+            else if(tabName === 'robot') document.getElementById('tabRobot').classList.add('active');
+            else if(tabName === 'design') document.getElementById('tabDesign').classList.add('active');
+            
             btnElement.classList.add('active');
         }
 
-        function toggleSettings() {
-            const modal = document.getElementById('settingsModal');
-            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-        }
+        // Render File System Grid
+        function renderFileSystem() {
+            const grid = document.getElementById('notesGrid');
+            grid.innerHTML = '';
 
-        function toggleTheme() {
-            const body = document.body;
-            body.setAttribute('data-theme', body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-        }
-
-        function sendReport() {
-            const text = document.getElementById('reportText').value.trim();
-            if(text) {
-                document.getElementById('inboxView').innerText = "بلاغ: " + text;
-                alert('تم إرسال البلاغ بنجاح.');
-                document.getElementById('reportText').value = '';
-                toggleSettings();
-            }
-        }
-    </script>
-</body>
-</html>
+            let currentItems = [];
+            if (currentFolderId === null) {
+                currentItems = fileSystem;
+                document.getElementById('currentPathTitle').innerText = "📁 الملفات الرئيسية";
+                document.getElementById('backFolderBtn').style.display = 'none';
+            } else {
+                let folder = findFolder
