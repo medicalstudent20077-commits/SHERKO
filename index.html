@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -16,6 +17,7 @@
             --yellow-btn: #facc15;
             --yellow-hover: #eab308;
             --success-color: #22c55e;
+            --google-btn: #ea4335;
         }
         [data-theme="light"] {
             --bg-color: #f1f5f9;
@@ -43,7 +45,6 @@
             flex-direction: column;
             justify-content: space-between;
         }
-        /* Cinematic Splash Screen & Background */
         .app-screen {
             display: none;
             flex: 1;
@@ -113,16 +114,27 @@
             font-size: 1rem;
             margin-top: 10px;
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-            z-index: 999;
-            position: relative;
         }
         .btn-main:hover {
             background: var(--accent-hover);
         }
-        /* Robot Hanging Mascot */
+        .btn-google {
+            background: #ffffff;
+            color: #3c4043;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+        .btn-google:hover {
+            background: #f8fafc;
+        }
+        /* Robot Mascot */
         .hanging-robot-container {
             position: relative;
-margin-bottom: 15px;
+            margin-bottom: 15px;
             display: inline-block;
         }
         .robot-mascot {
@@ -193,7 +205,6 @@ margin-bottom: 15px;
             display: block;
         }
         
-        /* Grid Styles */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -240,7 +251,7 @@ margin-bottom: 15px;
             border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: center;
+justify-content: center;
             font-size: 2rem;
             font-weight: bold;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
@@ -248,10 +259,6 @@ margin-bottom: 15px;
             z-index: 101;
             border: none;
         }
-        .floating-add-btn:hover {
-            background-color: var(--yellow-hover);
-        }
-/* Lecture & AI Toolbar */
         .lecture-toolbar {
             display: flex;
             gap: 10px;
@@ -272,14 +279,6 @@ margin-bottom: 15px;
             cursor: pointer;
             font-size: 0.85rem;
             white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .tool-btn:hover {
-            background: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
         }
         .ai-panel {
             background: var(--card-bg);
@@ -309,17 +308,18 @@ margin-bottom: 15px;
 </head>
 <body data-theme="dark">
 
-    <!-- Screen 1: Language Selection -->
+    <!-- Screen 1: Language Selection (Auto-advance on click/change) -->
     <div id="screenLang" class="app-screen screen-splash active-screen">
         <div class="hanging-robot-container">
             <div class="robot-mascot">🤖</div>
             <div class="robot-badge-clock" id="liveClockBadge">⏰ 00:00</div>
         </div>
         <h1 style="margin-bottom: 8px; font-size: 1.6rem; color: #fff;">منصة شيركو الذكية</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;">اختر لغة التطبيق المفضلة للمتابعة</p>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;">اختر لغة التطبيق للمتابعة الفورية</p>
         
         <div style="width: 100%; max-width: 320px;">
-            <select id="languageSelector" class="form-control" style="text-align: center; font-weight: bold; background: rgba(19, 27, 46, 0.9);">
+            <select id="languageSelector" class="form-control" style="text-align: center; font-weight: bold; background: rgba(19, 27, 46, 0.9);" onchange="onLanguageSelected()">
+                <option value="" disabled selected>-- انقر لاختيار اللغة --</option>
                 <option value="ar">🇸🇦 العربية (Arabic)</option>
                 <option value="en">🇬🇧 English (الإنجليزية)</option>
                 <option value="fr">🇫🇷 Français (الفرنسية)</option>
@@ -328,22 +328,30 @@ margin-bottom: 15px;
                 <option value="tr">🇹🇷 Türkçe (التركية)</option>
                 <option value="ku">☀️ کوردی (الكردية)</option>
             </select>
-            <button type="button" class="btn-main" onclick="proceedFromLanguage()">التالي ➔</button>
         </div>
     </div>
 
-    <!-- Screen 2: Account Login & GitHub Sync -->
+    <!-- Screen 2: Account Selection (Google Sign-In / Email / Skip) -->
     <div id="screenAccount" class="app-screen screen-splash">
         <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
-        <h1 style="margin-bottom: 10px; font-size: 1.5rem;">تسجيل الحساب والمزامنة</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">أدخل بريدك الإلكتروني لتفعيل مزامنة GitHub Actions</p>
-        <div style="width: 100%; max-width: 320px;">
-            <input type="email" id="userEmail" class="form-control" placeholder="example@gmail.com" style="text-align: center;">
-            <button type="button" class="btn-main" onclick="submitAccount()">تسجيل ودخول للتطبيق</button>
-            <button type="button" class="btn-main" onclick="skipAccount()" style="background:#475569; margin-top:8px;">تخطي الدخول المؤقت</button>
+        <h1 style="margin-bottom: 10px; font-size: 1.5rem;">اختر حساب الدخول</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">اختر حساب جوجل أو أدخل بريدك للمزامنة</p>
+        
+        <div style="width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 10px;">
+            <!-- Google Picker Option Button -->
+            <button type="button" class="btn-main btn-google" onclick="openGoogleAccountChooser()">
+                <span>🌐</span> اختيار حساب Google
+</button>
+            
+            <div style="display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 0.8rem; margin: 5px 0;">أو أدخل البريد يدوياً</div>
+            
+            <input type="email" id="userEmail" class="form-control" placeholder="example@gmail.com" style="text-align: center; margin-bottom: 5px;">
+            <button type="button" class="btn-main" onclick="submitManualAccount()">تسجيل ودخول للتطبيق</button>
+            <button type="button" class="btn-main" onclick="skipAccount()" style="background:#475569;">تخطي الدخول المؤقت</button>
         </div>
     </div>
-<!-- Screen 3: Main App Dashboard -->
+
+    <!-- Screen 3: Main App Dashboard -->
     <div id="screenMain" class="app-screen" style="padding: 0; background: var(--bg-color); height: 100vh; flex-direction: column;">
         <header>
             <div class="app-title" id="headerTitle">شيركو 🚀</div>
@@ -366,7 +374,7 @@ margin-bottom: 15px;
             <div id="tabRobot" class="tab-content">
                 <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
                     <h3>🤖 المساعد الآلي شيركو والروبوت الذكي</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">إدارة الروبوت العائم، الأوامر الصوتية التلقائية، وجينات الأتمتة الحديثة.</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">إدارة الروبوت العائم والأوامر الصوتية التلقائية.</p>
                 </div>
             </div>
 
@@ -374,7 +382,7 @@ margin-bottom: 15px;
             <div id="tabDesign" class="tab-content">
                 <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
                     <h3>🎨 منصة التصميم الذكي</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">محرر فيديو الريلز، وتصميم واجهات الديكور والجيمنج المتقدمة.</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">محرر فيديو الريلز وتصميم واجهات الديكور والجيمنج.</p>
                 </div>
             </div>
         </div>
@@ -396,39 +404,30 @@ margin-bottom: 15px;
         </nav>
     </div>
 
-    <!-- Lecture Viewer & Ultimate AI Engine Screen -->
+    <!-- Lecture Viewer Screen -->
     <div id="lectureViewerScreen" style="display:none; flex-direction:column; height:100vh; position:fixed; top:0; left:0; width:100%; background:var(--bg-color); z-index:200;">
         <header>
             <button class="icon-btn" onclick="closeLecture()">⬅ إغلاق المحاضرة</button>
             <div id="lectureTitleHeader" style="font-weight:bold; color:var(--accent-color);">اسم المحاضرة</div>
             <button class="icon-btn" onclick="toggleAIExpertPanel()">🤖 الذكاء الخارق</button>
         </header>
-
-        <div style="flex:1; padding:20px; overflow-y:auto;">
+<div style="flex:1; padding:20px; overflow-y:auto;">
             <div class="lecture-toolbar">
                 <button class="tool-btn" onclick="applyTool('pen')">🖊️ قلم تحديد</button>
                 <button class="tool-btn" onclick="applyTool('underline')">📌 تسطير</button>
-                <button class="tool-btn" onclick="applyTool('bullets')">📋 رؤوس أقلام</button>
                 <button class="tool-btn" onclick="openImageGenerator()" style="background:var(--yellow-btn); color:#000; font-weight:bold;">🖼️ توليد صور</button>
-                <button class="tool-btn" onclick="openQuestionGenerator()" style="background:var(--success-color); color:#fff; font-weight:bold;">❓ توليد أسئلة</button>
             </div>
-<!-- Ultimate AI Expert Panel -->
+
             <div id="aiExpertPanel" class="ai-panel">
-                <h4 style="color: var(--yellow-btn); margin-bottom: 8px;">⚡ مركز الذكاء الاصطناعي الخارق (Gemini + ChatGPT + Claude + NotebookLM + Kimi AI)</h4>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">اختر النموذج، قم بتحليل المحاضرة، ودمج جينات الأتمتة:</p>
-                <textarea id="aiPromptInput" class="form-control" placeholder="اكتب سؤالك أو اطلب تلخيص المحاضرة وتوليد أسئلة امتحان دقيقة..."></textarea>
+                <h4 style="color: var(--yellow-btn); margin-bottom: 8px;">⚡ مركز الذكاء الاصطناعي الخارق</h4>
+                <textarea id="aiPromptInput" class="form-control" placeholder="اكتب سؤالك أو اطلب تلخيص المحاضرة..."></textarea>
                 <button class="btn-main" onclick="runUltimateAI()">تنفيذ الأمر بالذكاء الخارق</button>
                 <div id="aiResponseOutput" style="margin-top: 10px; background: var(--bg-color); padding: 10px; border-radius: 8px; font-size: 0.9rem; display:none;"></div>
             </div>
 
-            <div id="imageResultsArea" style="margin-top:15px; display:none;">
-                <h4 style="font-size:0.95rem; margin-bottom:8px;">🖼️ النتائج المولدة:</h4>
-                <div id="imageGrid" style="display:flex; gap:10px; overflow-x:auto; padding-bottom:10px;"></div>
-            </div>
-
             <div style="background: var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:20px; margin-top:15px; min-height:300px;">
                 <h3 id="lectureContentTitle" style="margin-bottom: 10px;">محاضرة علمية</h3>
-                <p id="lectureTextBody" style="color: var(--text-secondary); line-height: 1.6;">هنا يتم عرض نص المحاضرة مع تفعيل جميع أدوات التنسيق، الجينات، والتوليد الذكي...</p>
+                <p id="lectureTextBody" style="color: var(--text-secondary); line-height: 1.6;">هنا يتم عرض نص المحاضرة...</p>
             </div>
         </div>
     </div>
@@ -447,23 +446,19 @@ margin-bottom: 15px;
         </div>
     </div>
 
-    <!-- Settings Modal & Admin Dashboard -->
+    <!-- Settings Modal -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <h2>الإعدادات العامة</h2>
             <button class="btn-main" onclick="toggleTheme()" style="background: #475569; margin-bottom: 15px;">تبديل المظهر (ليلي/نهاري)</button>
-            <input type="text" id="reportText" class="form-control" placeholder="الإبلاغ عن مشكلة...">
-            <button class="btn-main" onclick="sendReport()" style="margin-bottom: 15px;">إرسال بلاغ</button>
             <div id="adminPanelArea" style="display:none; border-top:1px solid var(--border-color); padding-top:10px; margin-top:10px;">
-                <p style="color:var(--success-color); font-weight:bold; font-size:0.9rem;">أهلاً بك يا دكتور كرار (لوحة التحكم والجينات)</p>
-                <p id="inboxView" style="font-size:0.8rem; color:var(--text-secondary); margin-top:5px;">لا توجد بلاغات جديدة.</p>
+                <p style="color:var(--success-color); font-weight:bold; font-size:0.9rem;">أهلاً بك يا دكتور كرار (لوحة التحكم)</p>
             </div>
             <button class="btn-main" onclick="toggleSettings()" style="background: #64748b;">إغلاق</button>
         </div>
     </div>
 
     <script>
-        // تحديث الساعة الحية للروبوت
         setInterval(() => {
             const now = new Date();
             const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -473,7 +468,30 @@ margin-bottom: 15px;
 
         const ADMIN_EMAIL = "medical.student2007.7@gmail.com";
         let currentUserEmail = "";
-let fileSystem = [
+
+        let fileSystem = [
             { id: 1, name: "المرحلة الأولى", type: "folder", parent: null, children: [
                 { id: 11, name: "التشريح العملي", type: "folder", parent: 1, children: [
-                    { id: 111, name: "محاضرة الجمجمة - نظري", type: "fil
+                    { id: 111, name: "محاضرة الجمجمة - نظري", type: "file", parent: 11 },
+                    { id: 112, name: "محاضرة الأوعية - عملي", type: "file", parent: 11 }
+                ]},
+                { id: 12, name: "مادة الحاسوب", type: "file", parent: 1 }
+            ]}
+        ];
+        let currentFolderId = null;
+function showScreen(screenId) {
+            document.querySelectorAll('.app-screen').forEach(s => {
+                s.classList.remove('active-screen');
+                s.style.display = 'none';
+            });
+            const target = document.getElementById(screenId);
+            if(target) {
+                target.classList.add('active-screen');
+                target.style.display = 'flex';
+            }
+        }
+
+        // الانتقال التلقائي فور اختيار اللغة بدون زر التالي
+        function onLanguageSelected() {
+            const selectedLang = document.getElementById('languageSelector').value;
+            if(selectedLang) {
