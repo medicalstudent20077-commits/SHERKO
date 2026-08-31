@@ -44,22 +44,7 @@
             justify-content: space-between;
         }
         /* Cinematic Splash Screen & Background */
-        .screen-splash {
-            background: linear-gradient(135deg, #0b0f19 0%, #1e1b4b 50%, #0f172a 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        .screen-splash::before {
-            content: '';
-            position: absolute;
-            width: 300px; height: 300px;
-            background: rgba(59, 130, 246, 0.15);
-            border-radius: 50%;
-            top: -50px; right: -50px;
-            filter: blur(60px);
-            z-index: 0;
-        }
-        .screen {
+        .app-screen {
             display: none;
             flex: 1;
             padding: 20px;
@@ -71,10 +56,16 @@
             align-items: center;
             text-align: center;
             position: relative;
-            z-index: 1;
+            z-index: 10;
         }
-        .screen.active {
+        .app-screen.active-screen {
             display: flex !important;
+        }
+        .screen-splash {
+            background: linear-gradient(135deg, #0b0f19 0%, #1e1b4b 50%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
         }
         header {
             display: flex;
@@ -122,16 +113,16 @@
             font-size: 1rem;
             margin-top: 10px;
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-z-index: 10;
+            z-index: 999;
             position: relative;
         }
         .btn-main:hover {
             background: var(--accent-hover);
         }
-        /* Robot Hanging/Clinging Graphic Animation Style */
+        /* Robot Hanging Mascot */
         .hanging-robot-container {
             position: relative;
-            margin-bottom: 15px;
+margin-bottom: 15px;
             display: inline-block;
         }
         .robot-mascot {
@@ -247,7 +238,7 @@ z-index: 10;
             background-color: var(--yellow-btn);
             color: #000;
             border-radius: 50%;
-display: flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
@@ -260,8 +251,7 @@ display: flex;
         .floating-add-btn:hover {
             background-color: var(--yellow-hover);
         }
-
-        /* Lecture & AI Toolbar */
+/* Lecture & AI Toolbar */
         .lecture-toolbar {
             display: flex;
             gap: 10px;
@@ -293,7 +283,7 @@ display: flex;
         }
         .ai-panel {
             background: var(--card-bg);
-            border: 1px title solid var(--accent-color);
+            border: 1px solid var(--accent-color);
             border-radius: 12px;
             padding: 15px;
             margin-top: 15px;
@@ -319,8 +309,8 @@ display: flex;
 </head>
 <body data-theme="dark">
 
-    <!-- Screen 1: Language Selection with Cinematic Background & Clinging Robot Mascot -->
-    <div id="screenLang" class="screen screen-splash active">
+    <!-- Screen 1: Language Selection -->
+    <div id="screenLang" class="app-screen screen-splash active-screen">
         <div class="hanging-robot-container">
             <div class="robot-mascot">🤖</div>
             <div class="robot-badge-clock" id="liveClockBadge">⏰ 00:00</div>
@@ -343,18 +333,18 @@ display: flex;
     </div>
 
     <!-- Screen 2: Account Login & GitHub Sync -->
-    <div id="screenAccount" class="screen screen-splash">
+    <div id="screenAccount" class="app-screen screen-splash">
         <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
         <h1 style="margin-bottom: 10px; font-size: 1.5rem;">تسجيل الحساب والمزامنة</h1>
-<p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">أدخل بريدك الإلكتروني لتفعيل مزامنة GitHub Actions</p>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">أدخل بريدك الإلكتروني لتفعيل مزامنة GitHub Actions</p>
         <div style="width: 100%; max-width: 320px;">
             <input type="email" id="userEmail" class="form-control" placeholder="example@gmail.com" style="text-align: center;">
             <button type="button" class="btn-main" onclick="submitAccount()">تسجيل ودخول للتطبيق</button>
+            <button type="button" class="btn-main" onclick="skipAccount()" style="background:#475569; margin-top:8px;">تخطي الدخول المؤقت</button>
         </div>
     </div>
-
-    <!-- Screen 3: Main App -->
-    <div id="screenMain" style="display: none; flex: 1; flex-direction: column; height: 100vh;">
+<!-- Screen 3: Main App Dashboard -->
+    <div id="screenMain" class="app-screen" style="padding: 0; background: var(--bg-color); height: 100vh; flex-direction: column;">
         <header>
             <div class="app-title" id="headerTitle">شيركو 🚀</div>
             <button class="icon-btn" onclick="toggleSettings()" title="الإعدادات">⚙️</button>
@@ -407,7 +397,7 @@ display: flex;
     </div>
 
     <!-- Lecture Viewer & Ultimate AI Engine Screen -->
-    <div id="lectureViewerScreen" style="display:none; flex:1; flex-direction:column; height:100vh; position:fixed; top:0; left:0; width:100%; background:var(--bg-color); z-index:200;">
+    <div id="lectureViewerScreen" style="display:none; flex-direction:column; height:100vh; position:fixed; top:0; left:0; width:100%; background:var(--bg-color); z-index:200;">
         <header>
             <button class="icon-btn" onclick="closeLecture()">⬅ إغلاق المحاضرة</button>
             <div id="lectureTitleHeader" style="font-weight:bold; color:var(--accent-color);">اسم المحاضرة</div>
@@ -415,15 +405,14 @@ display: flex;
         </header>
 
         <div style="flex:1; padding:20px; overflow-y:auto;">
-<div class="lecture-toolbar">
+            <div class="lecture-toolbar">
                 <button class="tool-btn" onclick="applyTool('pen')">🖊️ قلم تحديد</button>
                 <button class="tool-btn" onclick="applyTool('underline')">📌 تسطير</button>
                 <button class="tool-btn" onclick="applyTool('bullets')">📋 رؤوس أقلام</button>
                 <button class="tool-btn" onclick="openImageGenerator()" style="background:var(--yellow-btn); color:#000; font-weight:bold;">🖼️ توليد صور</button>
                 <button class="tool-btn" onclick="openQuestionGenerator()" style="background:var(--success-color); color:#fff; font-weight:bold;">❓ توليد أسئلة</button>
             </div>
-
-            <!-- Ultimate AI Expert Panel (Gemini, ChatGPT, Claude, NotebookLM, Kimi AI) -->
+<!-- Ultimate AI Expert Panel -->
             <div id="aiExpertPanel" class="ai-panel">
                 <h4 style="color: var(--yellow-btn); margin-bottom: 8px;">⚡ مركز الذكاء الاصطناعي الخارق (Gemini + ChatGPT + Claude + NotebookLM + Kimi AI)</h4>
                 <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">اختر النموذج، قم بتحليل المحاضرة، ودمج جينات الأتمتة:</p>
@@ -467,7 +456,7 @@ display: flex;
             <button class="btn-main" onclick="sendReport()" style="margin-bottom: 15px;">إرسال بلاغ</button>
             <div id="adminPanelArea" style="display:none; border-top:1px solid var(--border-color); padding-top:10px; margin-top:10px;">
                 <p style="color:var(--success-color); font-weight:bold; font-size:0.9rem;">أهلاً بك يا دكتور كرار (لوحة التحكم والجينات)</p>
-<p id="inboxView" style="font-size:0.8rem; color:var(--text-secondary); margin-top:5px;">لا توجد بلاغات جديدة.</p>
+                <p id="inboxView" style="font-size:0.8rem; color:var(--text-secondary); margin-top:5px;">لا توجد بلاغات جديدة.</p>
             </div>
             <button class="btn-main" onclick="toggleSettings()" style="background: #64748b;">إغلاق</button>
         </div>
@@ -484,6 +473,7 @@ display: flex;
 
         const ADMIN_EMAIL = "medical.student2007.7@gmail.com";
         let currentUserEmail = "";
-
-        let fileSystem = [
-            { id: 1, name: "المرحلة الأولى", type:
+let fileSystem = [
+            { id: 1, name: "المرحلة الأولى", type: "folder", parent: null, children: [
+                { id: 11, name: "التشريح العملي", type: "folder", parent: 1, children: [
+                    { id: 111, name: "محاضرة الجمجمة - نظري", type: "fil
